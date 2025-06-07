@@ -2,6 +2,7 @@
 modeling_guidelines:
   # 1. 図面投影法の理解
   projection_methods:
+    # 1.1 投影法の種類と地域性
     third_angle_projection:
       regions: ["日本", "アメリカ", "カナダ"]
       is_standard: true
@@ -27,6 +28,200 @@ modeling_guidelines:
         right_side_view: "正面図の左"
         bottom_view: "正面図の上"
         left_side_view: "正面図の右"
+
+    # 1.2 基本原則
+    fundamental_principles:
+      primary_view:
+        name: "正面図"
+        status: "必ず存在する基準図"
+        role: "全ての他図面の基準となる"
+        identification: "最も詳細で重要な情報を含む図面"
+      
+      derivative_views:
+        concept: "正面図以外は全て正面図から派生した図"
+        relationship: "正面図との投影関係で定義される"
+        validation_method: "外形線の延長による位置確認"
+    
+    # 1.3 図面識別の体系的手順
+    view_identification_process:
+      step1_front_view_identification:
+        method: "最も詳細な図面を正面図として特定"
+        criteria:
+          - "加工フィーチャーが最も明確に表現"
+          - "寸法情報が最も豊富"
+          - "設計意図が最も明確"
+        
+      step2_adjacent_view_analysis:
+        method: "正面図周辺の図面配置を分析"
+        procedure:
+          - "正面図の上下左右に配置された図面を特定"
+          - "各図面と正面図との外形線対応を確認"
+          - "投影関係の整合性を検証"
+      
+      step3_projection_line_verification:
+        method: "外形線延長による図面種別確定"
+        validation_rule: "正面図の外形幅線 = 隣接図面の外形幅線"
+    
+    # 1.4 各図面の配置関係と識別方法
+    view_relationships:
+      top_view:
+        position: "正面図の上"
+        projection_direction: "Z軸正方向から見下ろし"
+        verification:
+          width_correspondence: "正面図のX軸幅 = 上面図のX軸幅"
+          projection_line: "正面図の左右輪郭線を上に延長 → 上面図の左右輪郭線と一致"
+        identifying_features:
+          - "穴が円形で表示される（Z軸方向の穴の場合）"
+          - "高さ情報（Z軸）が失われる"
+      
+      bottom_view:
+        position: "正面図の下"
+        projection_direction: "Z軸負方向から見上げ"
+        verification:
+          width_correspondence: "正面図のX軸幅 = 下面図のX軸幅"
+          projection_line: "正面図の左右輪郭線を下に延長 → 下面図の左右輪郭線と一致"
+        note: "上面図の裏側から見た図"
+      
+      right_side_view:
+        position: "正面図の右"
+        projection_direction: "X軸正方向から見る"
+        verification:
+          height_correspondence: "正面図のZ軸高さ = 右側面図のZ軸高さ"
+          depth_correspondence: "正面図に見えないY軸奥行き = 右側面図のX軸幅"
+          projection_line: "正面図の上下輪郭線を右に延長 → 右側面図の上下輪郭線と一致"
+      
+      left_side_view:
+        position: "正面図の左"
+        projection_direction: "X軸負方向から見る"
+        verification:
+          height_correspondence: "正面図のZ軸高さ = 左側面図のZ軸高さ"
+          projection_line: "正面図の上下輪郭線を左に延長 → 左側面図の上下輪郭線と一致"
+        note: "右側面図の反対側から見た図"
+      
+      rear_view:
+        position: "右側面図の右"
+        projection_direction: "Y軸負方向から見る（正面図の反対方向）"
+        verification:
+          width_correspondence: "正面図のX軸幅 = 背面図のX軸幅"
+          height_correspondence: "正面図のZ軸高さ = 背面図のZ軸高さ"
+        note: "正面図の裏側から見た図"
+
+    # 1.5 投影線による図面関係の確認方法
+    projection_line_verification:
+      horizontal_projection:
+        rule: "水平方向の投影線は高さ（Z軸）情報を保持"
+        application:
+          - "正面図 ↔ 右側面図"
+          - "正面図 ↔ 左側面図"
+          - "上面図 ↔ 下面図（間接的）"
+        verification_method: "正面図の水平線を左右に延長 → 側面図の対応する水平線と一致"
+      
+      vertical_projection:
+        rule: "垂直方向の投影線は幅（X軸）情報を保持"
+        application:
+          - "正面図 ↔ 上面図"
+          - "正面図 ↔ 下面図"
+          - "右側面図 ↔ 背面図（間接的）"
+        verification_method: "正面図の垂直線を上下に延長 → 上下面図の対応する垂直線と一致"
+      
+      depth_projection:
+        rule: "奥行き（Y軸）情報は90度回転した図面で表現"
+        application:
+          - "上面図の縦方向 = 右側面図の横方向"
+          - "正面図で見えない奥行き = 側面図の幅"
+
+    # 1.6 図面識別の実践的手順
+    practical_identification_steps:
+      step1_layout_mapping:
+        action: "図面の物理的配置をマッピング"
+        method:
+          - "中央または最大の図面を正面図候補として特定"
+          - "周辺図面の相対位置を記録"
+          - "図面間の距離と配置パターンを確認"
+      
+      step2_projection_line_check:
+        action: "投影線の対応関係を確認"
+        procedure:
+          front_to_top:
+            check: "正面図の左右端を上に延長 → 上の図面の左右端と一致するか"
+            result_if_yes: "上の図面は上面図"
+          
+          front_to_right:
+            check: "正面図の上下端を右に延長 → 右の図面の上下端と一致するか"
+            result_if_yes: "右の図面は右側面図"
+          
+          front_to_left:
+            check: "正面図の上下端を左に延長 → 左の図面の上下端と一致するか"
+            result_if_yes: "左の図面は左側面図"
+          
+          front_to_bottom:
+            check: "正面図の左右端を下に延長 → 下の図面の左右端と一致するか"
+            result_if_yes: "下の図面は下面図"
+      
+      step3_consistency_verification:
+        action: "図面間の整合性を総合確認"
+        checks:
+          dimensional_consistency:
+            - "対応する軸の寸法が一致するか"
+            - "隠れ線が適切に表現されているか"
+          
+          feature_consistency:
+            - "同一フィーチャーが各図面で正しく投影されているか"
+            - "穴、切欠きなどの位置関係が整合するか"
+
+    # 1.7 特殊配置パターンへの対応
+    special_layout_patterns:
+      compact_layout:
+        description: "スペース節約のための非標準配置"
+        approach: "投影線対応関係を最優先で判定"
+        warning: "位置関係だけでは判定不可"
+      
+      partial_view_layout:
+        description: "一部の図面のみ表示"
+        approach: "存在する図面間の関係から推定"
+        method: "投影線の延長による仮想図面の想定"
+      
+      rotated_layout:
+        description: "図面が回転配置されている場合"
+        approach: "回転を考慮した投影線対応確認"
+        note: "稀なケースだが存在する"
+
+    # 1.8 エラー防止のための確認項目
+    error_prevention_checklist:
+      before_identification:
+        preparation:
+          - "[ ] 正面図を明確に特定した"
+          - "[ ] 周辺図面の配置を確認した"
+          - "[ ] 図面のサイズ比較を行った"
+      
+      during_identification:
+        projection_check:
+          - "[ ] 正面図から上への投影線を確認"
+          - "[ ] 正面図から右への投影線を確認"
+          - "[ ] 正面図から左への投影線を確認"
+          - "[ ] 正面図から下への投影線を確認"
+      
+      after_identification:
+        consistency_check:
+          - "[ ] 各図面の寸法対応を確認"
+          - "[ ] フィーチャーの投影整合性を確認"
+          - "[ ] 隠れ線の表現が適切か確認"
+      
+      common_mistake_prevention:
+        critical_warnings:
+          - "⚠️ 位置だけでなく投影線対応を必ず確認"
+          - "⚠️ 思い込みではなく実際の線の延長で判定"
+          - "⚠️ 全ての図面が正面図との関係で定義される"
+
+    # 1.9 投影法の理解における重要ポイント
+    key_principles:
+      core_concepts:
+        - "正面図が全ての基準である"
+        - "投影線の延長による確認が必須である"
+        - "位置関係だけでは不十分である"
+        - "外形線の対応関係が図面種別の決定要因である"
+      
+      benefit: "これらの原則に従うことで、図面配置に惑わされることなく正確な図面識別が可能になります。"
 
   # 2. 座標軸の定義
   coordinate_system:
@@ -354,199 +549,3 @@ modeling_guidelines:
     casting_parts:
       counterbore_indication: "ざぐりを指示する面に除去加工なしの表面粗さ記号がセット"
       depth_standard: "深さ指示が不要でもJISでの例が1mmなので1mmで指示"
-
-  # 11. 図面間関係の再定義
-  drawing_relationship_redefinition:
-    # 基本原則
-    fundamental_principles:
-      primary_view:
-        name: "正面図"
-        status: "必ず存在する基準図"
-        role: "全ての他図面の基準となる"
-        identification: "最も詳細で重要な情報を含む図面"
-      
-      derivative_views:
-        concept: "正面図以外は全て正面図から派生した図"
-        relationship: "正面図との投影関係で定義される"
-        validation_method: "外形線の延長による位置確認"
-
-    # 図面識別の体系的手順
-    view_identification_process:
-      step1_front_view_identification:
-        method: "最も詳細な図面を正面図として特定"
-        criteria:
-          - "加工フィーチャーが最も明確に表現"
-          - "寸法情報が最も豊富"
-          - "設計意図が最も明確"
-        
-      step2_adjacent_view_analysis:
-        method: "正面図周辺の図面配置を分析"
-        procedure:
-          - "正面図の上下左右に配置された図面を特定"
-          - "各図面と正面図との外形線対応を確認"
-          - "投影関係の整合性を検証"
-      
-      step3_projection_line_verification:
-        method: "外形線延長による図面種別確定"
-        validation_rule: "正面図の外形幅線 = 隣接図面の外形幅線"
-
-    # 各図面の配置関係と識別方法
-    view_relationships:
-      top_view:
-        position: "正面図の上"
-        projection_direction: "Z軸正方向から見下ろし"
-        verification:
-          width_correspondence: "正面図のX軸幅 = 上面図のX軸幅"
-          projection_line: "正面図の左右輪郭線を上に延長 → 上面図の左右輪郭線と一致"
-        identifying_features:
-          - "穴が円形で表示される（Z軸方向の穴の場合）"
-          - "高さ情報（Z軸）が失われる"
-      
-      bottom_view:
-        position: "正面図の下"
-        projection_direction: "Z軸負方向から見上げ"
-        verification:
-          width_correspondence: "正面図のX軸幅 = 下面図のX軸幅"
-          projection_line: "正面図の左右輪郭線を下に延長 → 下面図の左右輪郭線と一致"
-        note: "上面図の裏側から見た図"
-      
-      right_side_view:
-        position: "正面図の右"
-        projection_direction: "X軸正方向から見る"
-        verification:
-          height_correspondence: "正面図のZ軸高さ = 右側面図のZ軸高さ"
-          depth_correspondence: "正面図に見えないY軸奥行き = 右側面図のX軸幅"
-          projection_line: "正面図の上下輪郭線を右に延長 → 右側面図の上下輪郭線と一致"
-      
-      left_side_view:
-        position: "正面図の左"
-        projection_direction: "X軸負方向から見る"
-        verification:
-          height_correspondence: "正面図のZ軸高さ = 左側面図のZ軸高さ"
-          projection_line: "正面図の上下輪郭線を左に延長 → 左側面図の上下輪郭線と一致"
-        note: "右側面図の反対側から見た図"
-      
-      rear_view:
-        position: "右側面図の右"
-        projection_direction: "Y軸負方向から見る（正面図の反対方向）"
-        verification:
-          width_correspondence: "正面図のX軸幅 = 背面図のX軸幅"
-          height_correspondence: "正面図のZ軸高さ = 背面図のZ軸高さ"
-        note: "正面図の裏側から見た図"
-
-    # 投影線による図面関係の確認方法
-    projection_line_verification:
-      horizontal_projection:
-        rule: "水平方向の投影線は高さ（Z軸）情報を保持"
-        application:
-          - "正面図 ↔ 右側面図"
-          - "正面図 ↔ 左側面図"
-          - "上面図 ↔ 下面図（間接的）"
-        verification_method: "正面図の水平線を左右に延長 → 側面図の対応する水平線と一致"
-      
-      vertical_projection:
-        rule: "垂直方向の投影線は幅（X軸）情報を保持"
-        application:
-          - "正面図 ↔ 上面図"
-          - "正面図 ↔ 下面図"
-          - "右側面図 ↔ 背面図（間接的）"
-        verification_method: "正面図の垂直線を上下に延長 → 上下面図の対応する垂直線と一致"
-      
-      depth_projection:
-        rule: "奥行き（Y軸）情報は90度回転した図面で表現"
-        application:
-          - "上面図の縦方向 = 右側面図の横方向"
-          - "正面図で見えない奥行き = 側面図の幅"
-
-    # 図面識別の実践的手順
-    practical_identification_steps:
-      step1_layout_mapping:
-        action: "図面の物理的配置をマッピング"
-        method:
-          - "中央または最大の図面を正面図候補として特定"
-          - "周辺図面の相対位置を記録"
-          - "図面間の距離と配置パターンを確認"
-      
-      step2_projection_line_check:
-        action: "投影線の対応関係を確認"
-        procedure:
-          front_to_top:
-            check: "正面図の左右端を上に延長 → 上の図面の左右端と一致するか"
-            result_if_yes: "上の図面は上面図"
-          
-          front_to_right:
-            check: "正面図の上下端を右に延長 → 右の図面の上下端と一致するか"
-            result_if_yes: "右の図面は右側面図"
-          
-          front_to_left:
-            check: "正面図の上下端を左に延長 → 左の図面の上下端と一致するか"
-            result_if_yes: "左の図面は左側面図"
-          
-          front_to_bottom:
-            check: "正面図の左右端を下に延長 → 下の図面の左右端と一致するか"
-            result_if_yes: "下の図面は下面図"
-      
-      step3_consistency_verification:
-        action: "図面間の整合性を総合確認"
-        checks:
-          dimensional_consistency:
-            - "対応する軸の寸法が一致するか"
-            - "隠れ線が適切に表現されているか"
-          
-          feature_consistency:
-            - "同一フィーチャーが各図面で正しく投影されているか"
-            - "穴、切欠きなどの位置関係が整合するか"
-
-    # 特殊配置パターンへの対応
-    special_layout_patterns:
-      compact_layout:
-        description: "スペース節約のための非標準配置"
-        approach: "投影線対応関係を最優先で判定"
-        warning: "位置関係だけでは判定不可"
-      
-      partial_view_layout:
-        description: "一部の図面のみ表示"
-        approach: "存在する図面間の関係から推定"
-        method: "投影線の延長による仮想図面の想定"
-      
-      rotated_layout:
-        description: "図面が回転配置されている場合"
-        approach: "回転を考慮した投影線対応確認"
-        note: "稀なケースだが存在する"
-
-    # エラー防止のための確認項目
-    error_prevention_checklist:
-      before_identification:
-        preparation:
-          - "[ ] 正面図を明確に特定した"
-          - "[ ] 周辺図面の配置を確認した"
-          - "[ ] 図面のサイズ比較を行った"
-      
-      during_identification:
-        projection_check:
-          - "[ ] 正面図から上への投影線を確認"
-          - "[ ] 正面図から右への投影線を確認"
-          - "[ ] 正面図から左への投影線を確認"
-          - "[ ] 正面図から下への投影線を確認"
-      
-      after_identification:
-        consistency_check:
-          - "[ ] 各図面の寸法対応を確認"
-          - "[ ] フィーチャーの投影整合性を確認"
-          - "[ ] 隠れ線の表現が適切か確認"
-      
-      common_mistake_prevention:
-        critical_warnings:
-          - "⚠️ 位置だけでなく投影線対応を必ず確認"
-          - "⚠️ 思い込みではなく実際の線の延長で判定"
-          - "⚠️ 全ての図面が正面図との関係で定義される"
-
-    # まとめ
-    summary:
-      key_points:
-        - "正面図が全ての基準である"
-        - "投影線の延長による確認が必須である"
-        - "位置関係だけでは不十分である"
-        - "外形線の対応関係が図面種別の決定要因である"
-      
-      benefit: "これらの原則に従うことで、図面配置に惑わされることなく正確な図面識別が可能になります。"
