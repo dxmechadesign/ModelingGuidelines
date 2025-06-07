@@ -35,7 +35,7 @@ modeling_guidelines:
         name: "正面図"
         status: "必ず存在する基準図"
         role: "全ての他図面の基準となる"
-        identification: "最も詳細で重要な情報を含む図面"
+        identification: "全ての他図面の基準となる"
       
       derivative_views:
         concept: "正面図以外は全て正面図から派生した図"
@@ -44,24 +44,55 @@ modeling_guidelines:
     
     # 1.3 図面識別の体系的手順
     view_identification_process:
-      step1_front_view_identification:
-        method: "最も詳細な図面を正面図として特定"
-        criteria:
-          - "加工フィーチャーが最も明確に表現"
-          - "寸法情報が最も豊富"
-          - "設計意図が最も明確"
-        
-      step2_adjacent_view_analysis:
-        method: "正面図周辺の図面配置を分析"
-        procedure:
-          - "正面図の上下左右に配置された図面を特定"
-          - "各図面と正面図との外形線対応を確認"
-          - "投影関係の整合性を検証"
-      
-      step3_projection_line_verification:
-        method: "外形線延長による図面種別確定"
-        validation_rule: "正面図の外形幅線 = 隣接図面の外形幅線"
-    
+      front_view_identification:
+        fundamental_principle: "正面図は投影関係の基準であり、詳細さで判断するものではない"
+        primary_method: "投影線対応関係による系統的特定"
+        steps:
+          1: "配置パターンの確認（中央または基準位置の図面候補を特定）"
+          2: "投影線対応の検証（候補図面から他図面への投影線が成立するか）"
+          3: "全図面との整合性確認（候補を正面図とした場合の論理的整合性）"
+        warning: "詳細さや複雑さは正面図の判定基準ではない"
+
+      projection_line_primacy:
+        principle: "投影線対応関係が図面識別の唯一の客観的基準"
+        method: "物理的配置→投影線確認→整合性検証の順序厳守"
+        critical_understanding:
+          - "正面図の位置は設計者が決める（中央とは限らない）"
+          - "複雑さ・詳細さは正面図の条件ではない"
+          - "投影線の延長による幾何学的対応が全て"
+        verification_sequence:
+          step1: "候補図面の輪郭線を上下左右に延長"
+          step2: "延長線が隣接図面の対応する輪郭線と一致するか確認"
+          step3: "全方向で整合性が取れる図面を正面図と特定"
+
+      layout_pattern_recognition:
+        principle: "配置は投影関係の手がかりであり、絶対的基準ではない"
+        common_patterns:
+          center_reference:
+            description: "中央の図面が正面図"
+            verification: "中央図面からの投影線が周辺図面と対応"
+          corner_reference:
+            description: "角の図面が正面図"
+            verification: "角図面からの投影線が隣接図面と対応"
+          non_standard:
+            description: "非標準配置"
+            approach: "配置に惑わされず投影線対応のみで判定"
+        critical_rule: "配置パターンは参考程度。投影線対応が最終判定基準"
+
+      common_identification_errors:
+        detail_bias:
+          error: "詳細な図面を正面図と判断する"
+          cause: "複雑性への期待バイアス"
+          prevention: "詳細さではなく投影関係で判断"
+        position_assumption:
+          error: "中央の図面を無条件で正面図とする"
+          cause: "標準配置への思い込み"
+          prevention: "必ず投影線対応を確認"
+        complexity_expectation:
+          error: "複雑な形状情報を含む図面を正面図とする"
+          cause: "正面図=重要図面という誤解"
+          prevention: "正面図は基準図であり、必ずしも複雑ではない"
+
     # 1.4 各図面の配置関係と識別方法
     view_relationships:
       top_view:
