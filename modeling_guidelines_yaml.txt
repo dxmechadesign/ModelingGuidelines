@@ -238,6 +238,11 @@ modeling_guidelines:
         third_angle: "円錐台の投影図"
         first_angle: "円錐の投影図"
     
+    dimension_line_confusion:
+      problem: "寸法線を実際の形状線と混同"
+      solution: "寸法線（細線）と形状線（太線）を区別して判読"
+      note: "寸法線は形状を示すものではない"
+    
     dimension_duplication:
       problem: "同じ寸法を複数図面から取得"
       solution: "各軸方向の寸法は1つの図面から"
