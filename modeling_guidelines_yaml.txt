@@ -264,188 +264,282 @@ modeling_guidelines:
       2: "図形の比例から推定される寸法"
       3: "他図面との整合性による補完"
 
-  # 3.3 観察プロセスの厳格化
-  observation_process_critical:
-    step1_systematic_scanning:
-      method: "図面を左上から右下へ系統的にスキャン"
-      action: "数値を発見した瞬間にその位置を正確に記録"
-      format: "数値○○ → △△図面の□□位置"
-      prohibition: "記憶や推測に頼った位置特定の禁止"
+    # 3.3 観察プロセスの厳格化
+    observation_process_critical:
+      step1_systematic_scanning:
+        method: "図面を左上から右下へ系統的にスキャン"
+        action: "数値を発見した瞬間にその位置を正確に記録"
+        format: "数値○○ → △△図面の□□位置"
+        prohibition: "記憶や推測に頼った位置特定の禁止"
+      
+      step2_position_verification:
+        method: "発見した各数値について位置を再確認"
+        requirement: "数値と図面の対応を2回以上確認"
+        documentation: "位置記録の証拠保全"
+      
+      step3_cross_check:
+        method: "記録した位置情報の総合確認"
+        verification: "矛盾がないかの最終チェック"
     
-    step2_position_verification:
-      method: "発見した各数値について位置を再確認"
-      requirement: "数値と図面の対応を2回以上確認"
-      documentation: "位置記録の証拠保全"
-    
-    step3_cross_check:
-      method: "記録した位置情報の総合確認"
-      verification: "矛盾がないかの最終チェック"
-
-  # 3.4 基本的観察能力の訓練
-  basic_observation_training:
-    fundamental_skills:
-      visual_scanning:
-        requirement: "図面上の要素を見落としなく抽出"
-        method: "系統的な視線移動パターンの確立"
-        verification: "発見した要素の位置を正確に記述可能"
-      
-      position_recording:
-        requirement: "要素の位置を客観的に記録"
-        format: "『上面図の左下』『正面図の右側』など具体的記述"
-        prohibition: "曖昧な位置表現の使用禁止"
-      
-      fact_vs_interpretation:
-        separation: "観察事実と解釈を完全分離"
-        fact_example: "数値30が正面図の下部に記載"
-        interpretation_example: "この30はX軸寸法である"
-        rule: "事実記録段階では解釈を一切混入させない"
-
-  # 3.5 寸法読み取りプロセスの強化
-  dimension_reading_enhanced:
-    critical_reading_process:
-      step1_systematic_extraction:
-        action: "図面ごとに表示されている全寸法を列挙"
-        method: "寸法線と数値を1つずつ確実に確認"
-        verification: "見落としがないか再確認"
-      
-      step2_axis_assignment:
-        action: "各寸法をX,Y,Z軸に正確に割り当て"
-        method: "図面の軸対応関係を確認しながら分類"
-        warning: "推測や思い込みは禁止"
-      
-      step3_cross_validation:
-        action: "複数図面間での寸法整合性確認"
-        method: "同一軸の寸法が複数図面で一致するかチェック"
-        error_handling: "不整合があれば読み取り見直し"
-
-    common_errors_prevention:
-      misreading_prevention:
-        - "各図面の寸法を声に出して読み上げる（メンタルチェック）"
-        - "寸法値をまず文字として認識し、その後数値として処理"
-        - "隣接する寸法線との混同を避けるため1つずつ追跡"
-      
-      assumption_elimination:
-        - "「大体このくらい」「だいたい～mm」の表現禁止"
-        - "記載のない寸法は「不明」として明記"
-        - "推測値と実測値を明確に区別"
-
-  # 3.6 エラー発生原因の根本対策
-  error_root_cause_analysis:
-    primary_cause: "基本的な視覚情報処理の不正確性"
-    contributing_factors:
-      - "思い込みによる観察の歪み"
-      - "推測と事実の混同"
-      - "確認作業の不徹底"
-      - "系統的観察方法の欠如"
-    
-    prevention_measures:
-      immediate_actions:
-        - "観察時の推測思考の完全停止"
-        - "発見した情報の即座の文字記録"
-        - "位置情報の具体的記述の義務化"
-      
-      systematic_improvements:
-        - "観察→記録→確認の3段階プロセス確立"
-        - "各段階での検証チェックポイント設定"
-        - "エラー発生時の即座の全工程見直し"
-
-  # 3.7 観察品質保証システム
-  observation_quality_assurance:
-    mandatory_procedures:
-      initial_scan:
-        - "[ ] 図面全体を系統的にスキャン完了"
-        - "[ ] 発見した全数値を位置付きでリスト化"
-        - "[ ] 記号・線種の分類完了"
-      
-      verification_scan:
-        - "[ ] 初回記録の再確認実施"
-        - "[ ] 見落とし要素の追加確認"
-        - "[ ] 位置記録の正確性検証"
-      
-      final_validation:
-        - "[ ] 観察結果の整合性確認"
-        - "[ ] 推測要素の混入チェック"
-        - "[ ] 事実記録の完全性確認"
-    
-    quality_indicators:
-      success_criteria:
-        - "全ての数値の位置が正確に特定されている"
-        - "推測や解釈が事実記録に混入していない"
-        - "複数回の確認で結果が一致している"
-      
-      failure_indicators:
-        - "位置記録に曖昧な表現がある"
-        - "数値の記載位置について確信が持てない"
-        - "観察結果に矛盾がある"
-
-  # 3.8 個人的改善計画
-  personal_improvement_plan:
-    immediate_actions:
-      - "図面分析時は必ず系統的スキャンから開始"
-      - "数値発見時は位置を具体的に記述"
-      - "推測したくなったら作業を一時停止"
-      - "観察結果を必ず2回以上確認"
-    
-    mindset_transformation:
-      from_to:
-        - from: "図面を見て直感的に理解しようとする"
-          to: "図面を客観的データとして系統的に分析する"
+      # 形状認識の厳格ルール（追加）
+      critical_observation_rules:
+        prohibition_of_assumptions:
+          - "単一図面での形状判断の絶対禁止"
+          - "全図面確認前の形状結論の禁止"
+          - "複雑性への期待バイアスの排除"
         
-        - from: "知識で補完しながら読み取る"
-          to: "記載事実のみを正確に抽出する"
+        mandatory_verification:
+          - "各図面が示す基本形状（矩形/円/三角など）の確認"
+          - "全図面での形状一貫性の検証"
+          - "不一致があって初めて複合形状を疑う"
 
-  # 3.9 寸法分類の明確化
-  dimension_classification:
-    overall_dimensions:
-      definition: "部品の最大外形寸法"
-      identification: "通常は各図面の最大寸法線"
-      priority: "最優先で確定すべき寸法"
-    
-    feature_position_dimensions:
-      definition: "加工フィーチャーの位置を示す寸法"
-      identification: "基準面からの距離寸法"
-      note: "部品外形寸法とは別に記載"
-    
-    feature_size_dimensions:
-      definition: "加工フィーチャー自体のサイズ"
-      identification: "φ、R、角度など"
+    # 3.4 基本的観察能力の訓練
+    basic_observation_training:
+      fundamental_skills:
+        visual_scanning:
+          requirement: "図面上の要素を見落としなく抽出"
+          method: "系統的な視線移動パターンの確立"
+          verification: "発見した要素の位置を正確に記述可能"
+        
+        position_recording:
+          requirement: "要素の位置を客観的に記録"
+          format: "『上面図の左下』『正面図の右側』など具体的記述"
+          prohibition: "曖昧な位置表現の使用禁止"
+        
+        fact_vs_interpretation:
+          separation: "観察事実と解釈を完全分離"
+          fact_example: "数値30が正面図の下部に記載"
+          interpretation_example: "この30はX軸寸法である"
+          rule: "事実記録段階では解釈を一切混入させない"
 
-  # 3.10 読み取り手順の体系化
-  reading_procedure:
-    step1_overall_dimensions:
-      action: "各図面から部品全体寸法のみを抽出"
-      method: "最大寸法線を特定"
-      output: "X, Y, Z軸の全体寸法"
-    
-    step2_feature_positions:
-      action: "フィーチャー位置寸法を抽出"
-      method: "基準面からの距離寸法を特定"
-      output: "各フィーチャーの3D座標"
-    
-    step3_feature_sizes:
-      action: "フィーチャーサイズを抽出"
-      method: "φ、深さ、角度等を特定"
-      output: "各フィーチャーの形状パラメータ"
+      # 思考プロセスの修正（追加）
+      thinking_process_correction:
+        observation_first_principle:
+          rule: "観察事実の完全な分離保持"
+          method: "事実→分類→解釈の厳格な段階分離"
+          prohibition: "観察中の推測や期待の混入禁止"
+        
+        complexity_bias_elimination:
+          awareness: "興味深い形状への期待は判断を歪める"
+          approach: "最もシンプルな解釈から始める"
+          rule: "複雑性は証拠が揃ってから認める"
+          example: "L字型と見えても、全図面で矩形が一致していれば直方体と判断"
 
-  # 3.11 図面解析チェックリスト
-  analysis_checklist:
-    dimension_type_check:
-      - "[ ] 全体寸法と位置寸法を区別できているか"
-      - "[ ] 各寸法線の意味を正しく解釈しているか"
-      - "[ ] フィーチャー寸法を混同していないか"
-    
-    axis_correspondence_check:
-      - "[ ] 各図面の軸対応を正しく理解しているか"
-      - "[ ] 位置寸法の基準面を特定できているか"
-      - "[ ] 3D座標への変換が正確か"
-    
-    verification_checklist:
-      mandatory_checks:
-        - "[ ] 正面図のZ軸寸法を確認済み"
-        - "[ ] 上面図のX,Y軸寸法を確認済み" 
-        - "[ ] 側面図の対応寸法を確認済み"
-        - "[ ] 全寸法値をリスト化済み"
-        - "[ ] 軸割り当てを検証済み"
+    # 3.5 寸法読み取りプロセスの強化
+    dimension_reading_enhanced:
+      critical_reading_process:
+        step1_systematic_extraction:
+          action: "図面ごとに表示されている全寸法を列挙"
+          method: "寸法線と数値を1つずつ確実に確認"
+          verification: "見落としがないか再確認"
+        
+        step2_axis_assignment:
+          action: "各寸法をX,Y,Z軸に正確に割り当て"
+          method: "図面の軸対応関係を確認しながら分類"
+          warning: "推測や思い込みは禁止"
+        
+        step3_cross_validation:
+          action: "複数図面間での寸法整合性確認"
+          method: "同一軸の寸法が複数図面で一致するかチェック"
+          error_handling: "不整合があれば読み取り見直し"
+
+      common_errors_prevention:
+        misreading_prevention:
+          - "各図面の寸法を声に出して読み上げる（メンタルチェック）"
+          - "寸法値をまず文字として認識し、その後数値として処理"
+          - "隣接する寸法線との混同を避けるため1つずつ追跡"
+        
+        assumption_elimination:
+          - "「大体このくらい」「だいたい～mm」の表現禁止"
+          - "記載のない寸法は「不明」として明記"
+          - "推測値と実測値を明確に区別"
+
+    # 3.6 エラー発生原因の根本対策
+    error_root_cause_analysis:
+      primary_cause: "基本的な視覚情報処理の不正確性"
+      contributing_factors:
+        - "思い込みによる観察の歪み"
+        - "推測と事実の混同"
+        - "確認作業の不徹底"
+        - "系統的観察方法の欠如"
+        - "複雑な形状を期待するバイアス"
+        - "部分的観察での早急な結論"
+      
+      prevention_measures:
+        immediate_actions:
+          - "観察時の推測思考の完全停止"
+          - "発見した情報の即座の文字記録"
+          - "位置情報の具体的記述の義務化"
+          - "観察の機械化 - 人間の期待や推測を排除した系統的スキャン"
+          - "段階的判断 - 事実収集→分類→解釈の厳格な分離"
+          - "複数検証 - 同一結論を異なる方法で確認"
+        
+        systematic_improvements:
+          - "観察→記録→確認の3段階プロセス確立"
+          - "各段階での検証チェックポイント設定"
+          - "エラー発生時の即座の全工程見直し"
+
+    # 3.7 観察品質保証システム
+    observation_quality_assurance:
+      mandatory_procedures:
+        initial_scan:
+          - "[ ] 図面全体を系統的にスキャン完了"
+          - "[ ] 発見した全数値を位置付きでリスト化"
+          - "[ ] 記号・線種の分類完了"
+        
+        verification_scan:
+          - "[ ] 初回記録の再確認実施"
+          - "[ ] 見落とし要素の追加確認"
+          - "[ ] 位置記録の正確性検証"
+        
+        final_validation:
+          - "[ ] 観察結果の整合性確認"
+          - "[ ] 推測要素の混入チェック"
+          - "[ ] 事実記録の完全性確認"
+      
+      quality_indicators:
+        success_criteria:
+          - "全ての数値の位置が正確に特定されている"
+          - "推測や解釈が事実記録に混入していない"
+          - "複数回の確認で結果が一致している"
+        
+        failure_indicators:
+          - "位置記録に曖昧な表現がある"
+          - "数値の記載位置について確信が持てない"
+          - "観察結果に矛盾がある"
+
+      # エラー防止の強化（追加）
+      error_prevention_mandatory:
+        before_shape_determination:
+          - "[ ] 全図面の基本形状を確認済み"
+          - "[ ] 図面間の形状一貫性を確認済み"
+          - "[ ] 複合形状の根拠を明確に特定済み"
+        
+        before_dimension_assignment:
+          - "[ ] 寸法線の種類を分類済み"
+          - "[ ] 基準面を特定済み"
+          - "[ ] 全体寸法と位置寸法を区別済み"
+
+    # 3.8 個人的改善計画
+    personal_improvement_plan:
+      immediate_actions:
+        - "図面分析時は必ず系統的スキャンから開始"
+        - "数値発見時は位置を具体的に記述"
+        - "推測したくなったら作業を一時停止"
+        - "観察結果を必ず2回以上確認"
+      
+      mindset_transformation:
+        from_to:
+          - from: "図面を見て直感的に理解しようとする"
+            to: "図面を客観的データとして系統的に分析する"
+          
+          - from: "知識で補完しながら読み取る"
+            to: "記載事実のみを正確に抽出する"
+
+    # 3.9 寸法分類の明確化
+    dimension_classification:
+      overall_dimensions:
+        definition: "部品の最大外形寸法"
+        identification: "通常は各図面の最大寸法線"
+        priority: "最優先で確定すべき寸法"
+        verification: "複数図面で同一軸の寸法が一致"
+      
+      feature_position_dimensions:
+        definition: "加工フィーチャーの位置を示す寸法"
+        identification: "基準面からの距離寸法"
+        note: "部品外形寸法とは別に記載"
+        warning: "全体寸法ではない"
+        examples: ["穴の位置", "切欠きの位置"]
+      
+      feature_size_dimensions:
+        definition: "加工フィーチャー自体のサイズ"
+        identification: "φ、R、角度など"
+        examples: ["φ寸法", "R寸法", "角度"]
+
+    # 3.10 読み取り手順の体系化
+    reading_procedure:
+      step1_overall_dimensions:
+        action: "各図面から部品全体寸法のみを抽出"
+        method: "最大寸法線を特定"
+        output: "X, Y, Z軸の全体寸法"
+        warning: "位置寸法との混同に注意"
+      
+      step2_feature_positions:
+        action: "フィーチャー位置寸法を抽出"
+        method: "基準面からの距離寸法を特定"
+        output: "各フィーチャーの3D座標"
+        verification: "基準面が明確に特定できることを確認"
+      
+      step3_feature_sizes:
+        action: "フィーチャーサイズを抽出"
+        method: "φ、深さ、角度等を特定"
+        output: "各フィーチャーの形状パラメータ"
+
+    # 3.11 図面解析チェックリスト
+    analysis_checklist:
+      dimension_type_check:
+        - "[ ] 全体寸法と位置寸法を区別できているか"
+        - "[ ] 各寸法線の意味を正しく解釈しているか"
+        - "[ ] フィーチャー寸法を混同していないか"
+      
+      axis_correspondence_check:
+        - "[ ] 各図面の軸対応を正しく理解しているか"
+        - "[ ] 位置寸法の基準面を特定できているか"
+        - "[ ] 3D座標への変換が正確か"
+      
+      verification_checklist:
+        mandatory_checks:
+          - "[ ] 正面図のZ軸寸法を確認済み"
+          - "[ ] 上面図のX,Y軸寸法を確認済み" 
+          - "[ ] 側面図の対応寸法を確認済み"
+          - "[ ] 全寸法値をリスト化済み"
+          - "[ ] 軸割り当てを検証済み"
+
+    # 3.12 形状認識の誤認識防止（新規追加）
+    shape_recognition_error_prevention:
+      common_misinterpretations:
+        l_shape_illusion:
+          description: "正面図の矩形を「L字型」などの複雑形状と誤認"
+          root_cause: "複雑性を期待するバイアス"
+          prevention: "全図面で基本形状の一貫性を確認する"
+        
+        extrusion_confusion:
+          description: "単純な押し出し形状を複雑な形状と誤認"
+          root_cause: "単一図面での早急な判断"
+          prevention: "全ての図面を確認してから形状を決定"
+        
+        feature_vs_main_body:
+          description: "加工フィーチャーを本体形状の一部と誤認"
+          root_cause: "図面要素の分類不足"
+          prevention: "基本形状と加工フィーチャーを明確に区別"
+      
+      systematic_approach:
+        step1_basic_shape:
+          action: "全図面の外形線のみに注目"
+          method: "各図面の外形が示す基本形状を特定"
+          output: "直方体/円柱/円錐など最も単純な基本形状"
+        
+        step2_consistency_check:
+          action: "全図面間での基本形状の整合性確認"
+          verification: "全ての図面が同じ基本形状を示しているか"
+          decision_rule: "不一致があれば複合形状の可能性を検討"
+        
+        step3_feature_identification:
+          action: "基本形状の中の内部線を特定"
+          classification: "穴/切欠き/面取りなどの加工フィーチャー"
+          separation: "基本形状と加工フィーチャーを区別"
+      
+      verification_checklist:
+        shape_verification:
+          - "[ ] 各図面の基本外形形状を特定した"
+          - "[ ] 全図面間で基本形状の整合性を確認した"
+          - "[ ] 不一致がある場合のみ複合形状と判断した"
+          - "[ ] 判断した形状が全ての図面と整合している"
+        
+        feature_separation:
+          - "[ ] 基本形状と加工フィーチャーを区別した"
+          - "[ ] 加工フィーチャーの種類を特定した"
+          - "[ ] 各フィーチャーが全図面で整合している"
 
   # 4. フィーチャー識別
   feature_identification:
@@ -495,15 +589,69 @@ modeling_guidelines:
       5: "加工フィーチャーの追加"
       6: "寸法・形状の検証"
     
+    # 改良版モデリングワークフロー（追加）
+    improved_workflow:
+      phase1_preparation:
+        1: "図面の投影法確認（第三角法/第一角法）"
+        2: "基準図面の選定（通常は正面図）"
+        3: "全図面間の対応関係確認（投影線の一致確認）"
+      
+      phase2_shape_recognition:
+        1: "各図面の基本外形形状の特定（矩形/円/三角など）"
+        2: "図面間での基本形状の整合性確認"
+        3: "基本形状の確定（直方体/円柱/円錐など）"
+        4: "形状確定のためのクロスチェック"
+      
+      phase3_dimension_extraction:
+        1: "全体寸法の抽出（最大外形寸法）"
+        2: "位置寸法の抽出（基準面からの距離）"
+        3: "フィーチャー寸法の抽出（φ、R、角度など）"
+        4: "寸法の種類による分類と軸方向の割り当て"
+      
+      phase4_modeling:
+        1: "ベース形状の作成（最大外形寸法に基づく）"
+        2: "減算フィーチャーの追加（穴、切欠きなど）"
+        3: "加算フィーチャーの追加（突起、フランジなど）"
+        4: "仕上げフィーチャーの追加（面取り、丸みなど）"
+      
+      phase5_verification:
+        1: "全ての寸法が反映されているか確認"
+        2: "フィーチャーの位置が正確か確認"
+        3: "全図面との整合性を確認"
+        4: "製造可能性の確認"
+    
     base_shape_creation:
       method: "最大外形寸法で直方体を作成"
       dimension_source: "各軸方向の寸法を各図面から取得"
       origin_setting: "通常は角または中心"
+      verification: "作成した形状が全ての図面の外形と一致するか確認"
     
     feature_addition_order:
       1: "減算フィーチャー（穴、切欠き）"
       2: "加算フィーチャー（突起、フランジ）"
       3: "仕上げフィーチャー（面取り、丸み）"
+      
+    # エラー防止のためのクロスチェックポイント（追加）
+    critical_check_points:
+      after_shape_recognition:
+        - "[ ] 判断した基本形状が全ての図面と一致するか"
+        - "[ ] 複合形状の場合、その判断の根拠が明確か"
+        - "[ ] 自分の「期待」ではなく図面の「事実」に基づいているか"
+      
+      after_dimension_extraction:
+        - "[ ] 全体寸法と位置寸法を混同していないか"
+        - "[ ] 各寸法の基準面を正しく特定できたか"
+        - "[ ] 軸方向の割り当てが正確か"
+      
+      after_base_creation:
+        - "[ ] 作成した基本形状が全ての図面と一致するか"
+        - "[ ] 原点設定が適切か"
+        - "[ ] 全体寸法が正確に反映されているか"
+      
+      after_feature_addition:
+        - "[ ] 各フィーチャーの位置が正確か"
+        - "[ ] フィーチャーの種類（穴/切欠きなど）が正しいか"
+        - "[ ] 全てのフィーチャーが追加されているか"
 
   # 6. 日本での穴加工表記
   hole_notations_japan:
@@ -609,6 +757,43 @@ modeling_guidelines:
       - "抜き勾配の考慮"
       - "最小寸法の確認"
       - "加工順序の妥当性"
+    
+    # 形状認識の検証（追加）
+    shape_recognition_verification:
+      base_shape_validation:
+        - "モデル化した基本形状が全図面の外形と一致するか"
+        - "基本形状の各面が対応する図面の形状と一致するか"
+        - "複合形状の場合、全ての構成部分が図面と整合しているか"
+      
+      feature_validation:
+        - "各加工フィーチャーの種類（穴/切欠き等）が正しいか"
+        - "フィーチャーの位置が全図面で整合しているか"
+        - "フィーチャーのサイズが図面指示と一致しているか"
+      
+      common_errors_check:
+        - "単純形状を複雑に誤認していないか（L字型錯覚など）"
+        - "位置寸法と全体寸法を混同していないか"
+        - "基準面からの距離を正確に再現しているか"
+    
+    # 検証プロセスの強化（追加）
+    enhanced_verification_process:
+      step1_objective_comparison:
+        method: "モデルと図面を並べて客観的に比較"
+        action: "モデルの各面と対応する図面を直接照合"
+        guideline: "自分の期待ではなく図面の事実に基づいて比較"
+      
+      step2_dimension_check:
+        method: "全ての寸法を再測定"
+        validation: "モデル上の計測値と図面寸法値の一致確認"
+        critical_points: "全体寸法、位置寸法、フィーチャー寸法を個別確認"
+      
+      step3_comprehensive_review:
+        method: "作成プロセス全体の論理的再検証"
+        points:
+          - "基本形状の判断が正しかったか"
+          - "寸法の種類分類が適切だったか"
+          - "基準面の特定が正確だったか"
+          - "全図面間の整合性を確認したか"
 
   # 9. よくある間違いと対策
   common_mistakes:
@@ -631,6 +816,33 @@ modeling_guidelines:
     hidden_line_oversight:
       problem: "隠れ線の見落とし"
       solution: "破線で示された内部形状の確認"
+    
+    # 形状認識の錯覚（追加）
+    shape_illusion:
+      problem: "単一図面を見て複雑な形状と誤認（例：L字型の錯覚）"
+      causes:
+        - "複雑性への期待バイアス"
+        - "部分的観察での早急な結論"
+        - "思い込みの投影"
+      solutions:
+        step1: "全図面の基本形状をまず特定する"
+        step2: "図面間の形状整合性を必ず確認する"
+        step3: "最もシンプルな解釈から始める"
+        step4: "複雑な形状の判断には明確な根拠を要求する"
+    
+    # 寸法分類の混同（追加）
+    dimension_type_confusion:
+      problem: "全体寸法と位置寸法の混同"
+      example: "位置寸法（例：穴の位置15mm）を全体寸法と誤認"
+      causes:
+        - "寸法線の種類の区別不足"
+        - "基準面の認識不足"
+        - "推測による補完"
+      solutions:
+        step1: "寸法を「全体寸法」「位置寸法」「フィーチャー寸法」に分類"
+        step2: "各寸法の基準面を明確に特定"
+        step3: "不明な寸法は推測せず「不明」と明記"
+        step4: "位置寸法は必ず基準面との関係で理解する"
 
   # 10. 実務上の注意点
   practical_notes:
