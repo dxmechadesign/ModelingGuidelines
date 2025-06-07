@@ -249,20 +249,58 @@ modeling_guidelines:
         y_direction: "水平方向"
         z_direction: "垂直方向"
 
-  # 3. 寸法読み取り原則
+  # 3. 寸法読み取り原則と図面観察プロセス
   dimension_reading:
+    # 3.1 基本原則
     basic_principles:
       - "各図面には複数の寸法が表示されている"
       - "各図面では特定の平面（2次元）上の寸法情報のみ把握可能"
       - "立体的な寸法情報を得るには複数図面の情報を組み合わせる必要がある"
       - "同一部品の寸法は全図面で一致する必要がある"
     
+    # 3.2 優先順位
     priority_order:
       1: "直接記載された寸法線の値"
       2: "図形の比例から推定される寸法"
       3: "他図面との整合性による補完"
 
-  # 3.0.1 強化された寸法読み取りプロセス
+  # 3.3 観察プロセスの厳格化
+  observation_process_critical:
+    step1_systematic_scanning:
+      method: "図面を左上から右下へ系統的にスキャン"
+      action: "数値を発見した瞬間にその位置を正確に記録"
+      format: "数値○○ → △△図面の□□位置"
+      prohibition: "記憶や推測に頼った位置特定の禁止"
+    
+    step2_position_verification:
+      method: "発見した各数値について位置を再確認"
+      requirement: "数値と図面の対応を2回以上確認"
+      documentation: "位置記録の証拠保全"
+    
+    step3_cross_check:
+      method: "記録した位置情報の総合確認"
+      verification: "矛盾がないかの最終チェック"
+
+  # 3.4 基本的観察能力の訓練
+  basic_observation_training:
+    fundamental_skills:
+      visual_scanning:
+        requirement: "図面上の要素を見落としなく抽出"
+        method: "系統的な視線移動パターンの確立"
+        verification: "発見した要素の位置を正確に記述可能"
+      
+      position_recording:
+        requirement: "要素の位置を客観的に記録"
+        format: "『上面図の左下』『正面図の右側』など具体的記述"
+        prohibition: "曖昧な位置表現の使用禁止"
+      
+      fact_vs_interpretation:
+        separation: "観察事実と解釈を完全分離"
+        fact_example: "数値30が正面図の下部に記載"
+        interpretation_example: "この30はX軸寸法である"
+        rule: "事実記録段階では解釈を一切混入させない"
+
+  # 3.5 寸法読み取りプロセスの強化
   dimension_reading_enhanced:
     critical_reading_process:
       step1_systematic_extraction:
@@ -291,15 +329,72 @@ modeling_guidelines:
         - "記載のない寸法は「不明」として明記"
         - "推測値と実測値を明確に区別"
 
-    verification_checklist:
-      mandatory_checks:
-        - "[ ] 正面図のZ軸寸法を確認済み"
-        - "[ ] 上面図のX,Y軸寸法を確認済み" 
-        - "[ ] 側面図の対応寸法を確認済み"
-        - "[ ] 全寸法値をリスト化済み"
-        - "[ ] 軸割り当てを検証済み"
+  # 3.6 エラー発生原因の根本対策
+  error_root_cause_analysis:
+    primary_cause: "基本的な視覚情報処理の不正確性"
+    contributing_factors:
+      - "思い込みによる観察の歪み"
+      - "推測と事実の混同"
+      - "確認作業の不徹底"
+      - "系統的観察方法の欠如"
+    
+    prevention_measures:
+      immediate_actions:
+        - "観察時の推測思考の完全停止"
+        - "発見した情報の即座の文字記録"
+        - "位置情報の具体的記述の義務化"
+      
+      systematic_improvements:
+        - "観察→記録→確認の3段階プロセス確立"
+        - "各段階での検証チェックポイント設定"
+        - "エラー発生時の即座の全工程見直し"
 
-  # 3.1 寸法分類の明確化
+  # 3.7 観察品質保証システム
+  observation_quality_assurance:
+    mandatory_procedures:
+      initial_scan:
+        - "[ ] 図面全体を系統的にスキャン完了"
+        - "[ ] 発見した全数値を位置付きでリスト化"
+        - "[ ] 記号・線種の分類完了"
+      
+      verification_scan:
+        - "[ ] 初回記録の再確認実施"
+        - "[ ] 見落とし要素の追加確認"
+        - "[ ] 位置記録の正確性検証"
+      
+      final_validation:
+        - "[ ] 観察結果の整合性確認"
+        - "[ ] 推測要素の混入チェック"
+        - "[ ] 事実記録の完全性確認"
+    
+    quality_indicators:
+      success_criteria:
+        - "全ての数値の位置が正確に特定されている"
+        - "推測や解釈が事実記録に混入していない"
+        - "複数回の確認で結果が一致している"
+      
+      failure_indicators:
+        - "位置記録に曖昧な表現がある"
+        - "数値の記載位置について確信が持てない"
+        - "観察結果に矛盾がある"
+
+  # 3.8 個人的改善計画
+  personal_improvement_plan:
+    immediate_actions:
+      - "図面分析時は必ず系統的スキャンから開始"
+      - "数値発見時は位置を具体的に記述"
+      - "推測したくなったら作業を一時停止"
+      - "観察結果を必ず2回以上確認"
+    
+    mindset_transformation:
+      from_to:
+        - from: "図面を見て直感的に理解しようとする"
+          to: "図面を客観的データとして系統的に分析する"
+        
+        - from: "知識で補完しながら読み取る"
+          to: "記載事実のみを正確に抽出する"
+
+  # 3.9 寸法分類の明確化
   dimension_classification:
     overall_dimensions:
       definition: "部品の最大外形寸法"
@@ -315,7 +410,7 @@ modeling_guidelines:
       definition: "加工フィーチャー自体のサイズ"
       identification: "φ、R、角度など"
 
-  # 3.2 読み取り手順の体系化
+  # 3.10 読み取り手順の体系化
   reading_procedure:
     step1_overall_dimensions:
       action: "各図面から部品全体寸法のみを抽出"
@@ -332,7 +427,7 @@ modeling_guidelines:
       method: "φ、深さ、角度等を特定"
       output: "各フィーチャーの形状パラメータ"
 
-  # 3.3 図面解析チェックリスト
+  # 3.11 図面解析チェックリスト
   analysis_checklist:
     dimension_type_check:
       - "[ ] 全体寸法と位置寸法を区別できているか"
@@ -343,6 +438,14 @@ modeling_guidelines:
       - "[ ] 各図面の軸対応を正しく理解しているか"
       - "[ ] 位置寸法の基準面を特定できているか"
       - "[ ] 3D座標への変換が正確か"
+    
+    verification_checklist:
+      mandatory_checks:
+        - "[ ] 正面図のZ軸寸法を確認済み"
+        - "[ ] 上面図のX,Y軸寸法を確認済み" 
+        - "[ ] 側面図の対応寸法を確認済み"
+        - "[ ] 全寸法値をリスト化済み"
+        - "[ ] 軸割り当てを検証済み"
 
   # 4. フィーチャー識別
   feature_identification:
