@@ -57,14 +57,60 @@ modeling_guidelines:
   # 3. 寸法読み取り原則
   dimension_reading:
     basic_principles:
-      - "各図面で見える2つの寸法のみが有効"
-      - "第3の寸法は他の図面から取得"
+      - "各図面には複数の寸法が表示されている"
+      - "各図面では特定の平面（2次元）上の寸法情報のみ把握可能"
+      - "立体的な寸法情報を得るには複数図面の情報を組み合わせる必要がある"
       - "同一部品の寸法は全図面で一致する必要がある"
     
     priority_order:
       1: "直接記載された寸法線の値"
       2: "図形の比例から推定される寸法"
       3: "他図面との整合性による補完"
+
+  # 3.1 寸法分類の明確化
+  dimension_classification:
+    overall_dimensions:
+      definition: "部品の最大外形寸法"
+      identification: "通常は各図面の最大寸法線"
+      priority: "最優先で確定すべき寸法"
+    
+    feature_position_dimensions:
+      definition: "加工フィーチャーの位置を示す寸法"
+      identification: "基準面からの距離寸法"
+      note: "部品外形寸法とは別に記載"
+    
+    feature_size_dimensions:
+      definition: "加工フィーチャー自体のサイズ"
+      identification: "φ、R、角度など"
+
+  # 3.2 読み取り手順の体系化
+  reading_procedure:
+    step1_overall_dimensions:
+      action: "各図面から部品全体寸法のみを抽出"
+      method: "最大寸法線を特定"
+      output: "X, Y, Z軸の全体寸法"
+    
+    step2_feature_positions:
+      action: "フィーチャー位置寸法を抽出"
+      method: "基準面からの距離寸法を特定"
+      output: "各フィーチャーの3D座標"
+    
+    step3_feature_sizes:
+      action: "フィーチャーサイズを抽出"
+      method: "φ、深さ、角度等を特定"
+      output: "各フィーチャーの形状パラメータ"
+
+  # 3.3 図面解析チェックリスト
+  analysis_checklist:
+    dimension_type_check:
+      - "[ ] 全体寸法と位置寸法を区別できているか"
+      - "[ ] 各寸法線の意味を正しく解釈しているか"
+      - "[ ] フィーチャー寸法を混同していないか"
+    
+    axis_correspondence_check:
+      - "[ ] 各図面の軸対応を正しく理解しているか"
+      - "[ ] 位置寸法の基準面を特定できているか"
+      - "[ ] 3D座標への変換が正確か"
 
   # 4. フィーチャー識別
   feature_identification:
