@@ -1,0 +1,268 @@
+# 2次元図面からモデリングする場合の定義
+modeling_guidelines:
+  # 1. 図面投影法の理解
+  projection_methods:
+    third_angle_projection:
+      regions: ["日本", "アメリカ", "カナダ"]
+      is_standard: true
+  	layout_variations:
+    	  standard_layout:
+      	  front_view: "中央"
+      	  top_view: "正面図の上"
+      	  right_side_view: "正面図の右"
+    
+    	alternate_layout_type1:
+      	  description: "縦配置レイアウト"
+      	  top_view: "上段"
+      	  front_view: "中段左または下段左"
+      	  right_side_view: "中段右または下段右"
+      	  note: "スペース効率を考慮した配置"
+    
+    first_angle_projection:
+      regions: ["ヨーロッパ"]
+      is_standard: false
+      layout:
+        front_view: "中央"
+        top_view: "正面図の下"
+        right_side_view: "正面図の左"
+        bottom_view: "正面図の上"
+        left_side_view: "正面図の右"
+
+  # 2. 座標軸の定義
+  coordinate_system:
+    standard:
+      x_axis: "水平方向（左右）"
+      y_axis: "奥行き方向（手前・奥）"
+      z_axis: "垂直方向（上下）"
+    
+    view_correspondence:
+      front_view:
+        visible_axes: ["X", "Z"]
+        hidden_axis: "Y"
+        x_direction: "水平方向"
+        z_direction: "垂直方向"
+      
+      top_view:
+        visible_axes: ["X", "Y"]
+        hidden_axis: "Z"
+        x_direction: "水平方向"
+        y_direction: "垂直方向"
+      
+      right_side_view:
+        visible_axes: ["Y", "Z"]
+        hidden_axis: "X"
+        y_direction: "水平方向"
+        z_direction: "垂直方向"
+
+  # 3. 寸法読み取り原則
+  dimension_reading:
+    basic_principles:
+      - "各図面で見える2つの寸法のみが有効"
+      - "第3の寸法は他の図面から取得"
+      - "同一部品の寸法は全図面で一致する必要がある"
+    
+    priority_order:
+      1: "直接記載された寸法線の値"
+      2: "図形の比例から推定される寸法"
+      3: "他図面との整合性による補完"
+
+  # 4. フィーチャー識別
+  feature_identification:
+    basic_shapes:
+      rectangular_prism:
+        all_views: "矩形"
+        description: "直方体"
+      
+      cylinder:
+        one_direction: "円"
+        other_directions: "矩形"
+        description: "円柱"
+      
+      cone:
+        one_direction: "円"
+        other_directions: "三角形"
+        description: "円錐"
+      
+      sphere:
+        all_directions: "円"
+        description: "球"
+    
+    machining_features:
+      through_hole:
+        appearance: "複数図面で一貫した円形状"
+        description: "貫通穴"
+      
+      counterbore:
+        appearance: "段付き円形状"
+        description: "ザグリ穴"
+      
+      chamfer:
+        appearance: "角部の斜線"
+        description: "面取り"
+      
+      fillet:
+        appearance: "角部の円弧"
+        description: "丸み（R）"
+
+  # 5. モデリング手順
+  modeling_workflow:
+    basic_procedure:
+      1: "図面の投影法確認"
+      2: "基準図面の選定（通常は正面図）"
+      3: "外形寸法の確定"
+      4: "ベース形状の作成"
+      5: "加工フィーチャーの追加"
+      6: "寸法・形状の検証"
+    
+    base_shape_creation:
+      method: "最大外形寸法で直方体を作成"
+      dimension_source: "各軸方向の寸法を各図面から取得"
+      origin_setting: "通常は角または中心"
+    
+    feature_addition_order:
+      1: "減算フィーチャー（穴、切欠き）"
+      2: "加算フィーチャー（突起、フランジ）"
+      3: "仕上げフィーチャー（面取り、丸み）"
+
+  # 6. 日本での穴加工表記
+  hole_notations_japan:
+    symbols:
+      diameter: 
+        symbol: "φ"
+        reading: ["まる", "ふぁい"]
+      
+      hole_depth:
+        symbol: "↧"
+        reading: "あなふかさ"
+      
+      counterbore:
+        symbol: "⌴"
+        reading: ["ざぐり", "ふかざぐり"]
+      
+      countersink:
+        symbol: "⌵"
+        reading: "さらざぐり"
+    
+    hole_types:
+      drill_hole:
+        notation: ["φ10", "10キリ", "10D"]
+        description: "ドリル工具で加工する穴"
+        bottom_shape: "円錐状（118度）"
+      
+      reamer_hole:
+        notation: ["φ10リーマ", "10DR", "φ10H7"]
+        description: "リーマ工具で加工する寸法精度の高い穴"
+      
+      through_hole:
+        notation: ["φ10 貫通", "φ10"]
+        description: "貫通穴"
+        depth_notation: "深さ指示なし"
+      
+      blind_hole:
+        notation: ["φ10↧15", "φ10 深さ15"]
+        description: "止まり穴（有底穴）"
+        depth_definition: "円筒部の深さ（円錐部含まない）"
+      
+      counterbore_hole:
+        shallow:
+          notation: ["⌴φ20×1 φ10"]
+          description: "ざぐり（浅い座面加工）"
+          purpose: "六角ボルトの座面をきれいにする"
+        
+        deep:
+          notation: ["⌴φ15×10 φ8"]
+          description: "深ざぐり（深い沈み穴）"
+          purpose: "六角穴付きボルトの頭を沈みこませる"
+          bottom_shape: "フラット"
+      
+      countersink_hole:
+        notation: ["⌵φ16 φ8", "⌵φ16×90° φ8"]
+        description: "皿ざぐり（皿穴）"
+        purpose: "皿ねじの頭を沈みこませる"
+        angle: "90度円錐"
+    
+    multiple_holes:
+      notation: "4×φ10"
+      rule: "同一箇所の一群の穴の総数を記入"
+
+  # 7. CAD実装設定
+  cad_implementation:
+    coordinate_setup:
+      origin: [0, 0, 0]
+      x_positive: "右"
+      y_positive: "奥"
+      z_positive: "上"
+    
+    creation_order:
+      1: "CreateBox3DTool（外形作成）"
+      2: "CreateCylinder3DTool（円形フィーチャー）"
+      3: "BooleanSubtract（減算加工）"
+      4: "BooleanUnite（結合加工）"
+    
+    hole_modeling:
+      drill_hole:
+        shape: "円柱 + 底面円錐（118度）"
+      
+      counterbore_shallow:
+        shape: "貫通穴 + 浅い円筒穴（通常1mm）"
+      
+      counterbore_deep:
+        shape: "貫通穴 + 深い円筒穴（底面フラット）"
+      
+      countersink:
+        shape: "貫通穴 + 90度円錐穴"
+
+  # 8. 検証項目
+  verification:
+    dimensional_consistency:
+      - "各図面間での寸法一致"
+      - "加工フィーチャーの位置関係"
+      - "材料厚みの一貫性"
+    
+    geometric_consistency:
+      - "対称性の確認"
+      - "中心線の一致"
+      - "角度・勾配の正確性"
+    
+    manufacturability:
+      - "抜き勾配の考慮"
+      - "最小寸法の確認"
+      - "加工順序の妥当性"
+
+  # 9. よくある間違いと対策
+  common_mistakes:
+    projection_confusion:
+      problem: "投影法の混同"
+      solution: "図面右下の投影記号を確認"
+      symbols:
+        third_angle: "円錐台の投影図"
+        first_angle: "円錐の投影図"
+    
+    dimension_duplication:
+      problem: "同じ寸法を複数図面から取得"
+      solution: "各軸方向の寸法は1つの図面から"
+    
+    hidden_line_oversight:
+      problem: "隠れ線の見落とし"
+      solution: "破線で示された内部形状の確認"
+
+  # 10. 実務上の注意点
+  practical_notes:
+    modern_trends:
+      - "普通公差を適用させる前提"
+      - "ドリル穴は公差なし表記"
+      - "リーマ穴ははめあい公差付き(H7など)"
+      - "ねじ穴はM表記"
+      - "加工方法指示なしでも混乱が生じない傾向"
+    
+    terminology:
+      strict_distinction:
+        counterbore_shallow: "ざぐり（浅い）"
+        counterbore_deep: "深ざぐり（深い）"
+      
+      practical_usage:
+        note: "除去加工を前提にしている設計者の多くは、深ざぐりのことをざぐりと表現"
+    
+    casting_parts:
+      counterbore_indication: "ざぐりを指示する面に除去加工なしの表面粗さ記号がセット"
+      depth_standard: "深さ指示が不要でもJISでの例が1mmなので1mmで指示"
