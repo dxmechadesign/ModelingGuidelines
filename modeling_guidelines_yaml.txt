@@ -67,6 +67,43 @@ modeling_guidelines:
       2: "図形の比例から推定される寸法"
       3: "他図面との整合性による補完"
 
+  # 3.0.1 強化された寸法読み取りプロセス
+  dimension_reading_enhanced:
+    critical_reading_process:
+      step1_systematic_extraction:
+        action: "図面ごとに表示されている全寸法を列挙"
+        method: "寸法線と数値を1つずつ確実に確認"
+        verification: "見落としがないか再確認"
+      
+      step2_axis_assignment:
+        action: "各寸法をX,Y,Z軸に正確に割り当て"
+        method: "図面の軸対応関係を確認しながら分類"
+        warning: "推測や思い込みは禁止"
+      
+      step3_cross_validation:
+        action: "複数図面間での寸法整合性確認"
+        method: "同一軸の寸法が複数図面で一致するかチェック"
+        error_handling: "不整合があれば読み取り見直し"
+
+    common_errors_prevention:
+      misreading_prevention:
+        - "各図面の寸法を声に出して読み上げる（メンタルチェック）"
+        - "寸法値をまず文字として認識し、その後数値として処理"
+        - "隣接する寸法線との混同を避けるため1つずつ追跡"
+      
+      assumption_elimination:
+        - "「大体このくらい」「だいたい～mm」の表現禁止"
+        - "記載のない寸法は「不明」として明記"
+        - "推測値と実測値を明確に区別"
+
+    verification_checklist:
+      mandatory_checks:
+        - "[ ] 正面図のZ軸寸法を確認済み"
+        - "[ ] 上面図のX,Y軸寸法を確認済み" 
+        - "[ ] 側面図の対応寸法を確認済み"
+        - "[ ] 全寸法値をリスト化済み"
+        - "[ ] 軸割り当てを検証済み"
+
   # 3.1 寸法分類の明確化
   dimension_classification:
     overall_dimensions:
