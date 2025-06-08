@@ -281,6 +281,57 @@ modeling_guidelines:
         y_direction: "水平方向"
         z_direction: "垂直方向"
 
+    # 2.1 軸対応関係の明確化（追加）
+    coordinate_system_detailed:
+      axis_direction_mapping:
+        front_view:
+          horizontal_axis: "X軸（左右方向）"
+          vertical_axis: "Z軸（上下方向）"
+          note: "Y軸（奥行き）は見えない"
+        
+        right_side_view:
+          horizontal_axis: "Y軸（左右方向）"
+          vertical_axis: "Z軸（上下方向）"
+          note: "X軸（幅）は見えない"
+        
+        top_view:
+          horizontal_axis: "X軸（左右方向）"
+          vertical_axis: "Y軸（上下方向）"
+          note: "Z軸（高さ）は見えない"
+
+      critical_understanding:
+        rule1: "各図面の水平方向と垂直方向が、必ずしも同じ軸を表すとは限らない"
+        rule2: "図面の向きと軸の対応を必ず確認してから寸法を読み取る"
+        example:
+          confusion_point: "右側面図の垂直方向はZ軸であり、水平方向はY軸である"
+          correct_interpretation: "右側面図：水平=Y軸、垂直=Z軸"
+      
+      # 軸対応関係エラーの防止（追加）
+      axis_correspondence_error_prevention:
+        critical_warning:
+          message: "⚠️ 右側面図の垂直方向はZ軸であり、水平方向はY軸である"
+          explanation: "右側面図は[Y軸-Z軸]平面を示すため、垂直方向=Z軸、水平方向=Y軸"
+        
+        verification_method:
+          step1: "図面名を確認（正面図/右側面図/上面図）"
+          step2: "その図面で見える軸を特定"
+          step3: "水平/垂直方向とX,Y,Z軸の対応を明確化"
+          step4: "他の図面との整合性を確認"
+        
+        common_misunderstanding:
+          error: "図面の向きで軸を判断する"
+          correct: "投影関係で軸を判断する"
+          example: "右側面図だからといって右方向がX軸とは限らない"
+
+      dimension_magnitude_check:
+        rule: "寸法の大小関係に違和感があれば必ず再確認"
+        examples:
+          suspicious_case1: "厚みが幅より大きい場合"
+          suspicious_case2: "高さが極端に小さい場合"
+          suspicious_case3: "アスペクト比が異常な場合"
+        
+        action: "違和感を覚えた時点で全寸法の再読み取りを実施"
+
   # 3. 寸法読み取り原則と図面観察プロセス
   dimension_reading:
     # 3.1 基本原則
@@ -572,28 +623,348 @@ modeling_guidelines:
           - "[ ] 基本形状と加工フィーチャーを区別した"
           - "[ ] 加工フィーチャーの種類を特定した"
           - "[ ] 各フィーチャーが全図面で整合している"
+    
+    # 3.13 寸法識別の具体的手法（追加）
+    dimension_identification_method:
+      overall_dimension_identification:
+        visual_characteristics:
+          - "図面の最外周を示す寸法線"
+          - "通常は最も長い寸法線"
+          - "部品全体の境界を示している"
+        
+        verification_method:
+          step1: "寸法線の両端が部品の最外縁に接しているか確認"
+          step2: "その方向で最大の寸法値かどうか確認"
+          step3: "他の図面で同じ軸の寸法と一致するか確認"
+        
+        common_locations:
+          front_view: "上端または下端の水平寸法線、左端または右端の垂直寸法線"
+          side_view: "同様に最外縁の寸法線"
+          top_view: "同様に最外縁の寸法線"
+      
+      position_dimension_identification:
+        visual_characteristics:
+          - "基準面（通常は端面）からの距離を示す"
+          - "フィーチャー（穴、切欠きなど）の位置を指示"
+          - "全体寸法より小さい値"
+        
+        reference_point_identification:
+          rule: "位置寸法は必ず基準面を特定する"
+          method: "寸法線の起点となる面や線を確認"
+          warning: "基準面が不明な場合は位置寸法として扱わない"
+
+    dimension_reading_priority:
+      priority_1: "全体寸法の特定（最優先）"
+      priority_2: "軸方向の確認"
+      priority_3: "位置寸法の特定"
+      priority_4: "フィーチャー寸法の特定"
+      
+      rule: "優先順位の高い項目から順番に処理し、混同を防ぐ"
+    
+    # 3.14 強制的観察チェックリスト（追加）
+    mandatory_observation_checklist:
+      before_analysis_start:
+        - "[ ] 図面の全体を一度俯瞰した"
+        - "[ ] 投影記号を確認した"
+        - "[ ] 各図面の配置関係を把握した"
+      
+      during_dimension_reading:
+        step1_systematic_scan:
+          - "[ ] 正面図を左上→右上→右下→左下の順でスキャン"
+          - "[ ] 発見した全数値を位置付きで記録"
+          - "[ ] 見落とし防止のため再度スキャン"
+        
+        step2_axis_assignment:
+          - "[ ] 各図面の軸対応関係を確認"
+          - "[ ] 水平方向の寸法がどの軸かを特定"
+          - "[ ] 垂直方向の寸法がどの軸かを特定"
+        
+        step3_cross_verification:
+          - "[ ] 同一軸の寸法が複数図面で整合するか確認"
+          - "[ ] 矛盾がある場合は読み取りを見直し"
+      
+      completion_verification:
+        - "[ ] X,Y,Z軸すべての寸法を特定できた"
+        - "[ ] 不明な寸法は「不明」として明記した"
+        - "[ ] 全寸法を再度確認した"
+
+    error_prevention_system:
+      mandatory_double_check:
+        rule: "全ての寸法読み取りは必ず2回実施"
+        method: "1回目と2回目で結果が一致しない場合は3回目実施"
+      
+      dimension_recording_format:
+        required_format: "数値：○○mm → 図面名：□□ → 位置：△△ → 軸：※※"
+        example: "19mm → 正面図 → 水平方向全体寸法 → X軸"
+      
+      contradiction_detection:
+        rule: "読み取った寸法に矛盾がないか必ず確認"
+        check_points:
+          - "同一軸の寸法が複数図面で一致するか"
+          - "全体寸法と部分寸法の関係に矛盾がないか"
+          - "フィーチャー位置が全体寸法内に収まるか"
 
   # 4. フィーチャー識別
   feature_identification:
+    # 4.1 要素分解による形状認識（新規追加）
+    element_decomposition_process:
+      step1_element_counting:
+        method: "各図面で独立した形状要素の個数を数える"
+        procedure:
+          front_view:
+            action: "実線で囲まれた独立領域を特定"
+            example: "矩形1個 + 円形1個 = 2要素"
+            note: "重なりや内包関係も考慮"
+          
+          side_view:
+            action: "同様に独立領域を特定"
+            example: "矩形2個（積み重なり） = 2要素"
+            verification: "φ記号による円形要素の確認"
+          
+          top_view:
+            action: "同様に独立領域を特定"
+            note: "要素が見えない場合もある"
+      
+      step2_line_type_analysis:
+        real_line_meaning:
+          definition: "その図面から見える実際の境界線"
+          implication: "形状が手前に存在している"
+          example: "正面図の円形実線 → 円柱の正面投影"
+        
+        dashed_line_meaning:
+          definition: "隠れた部分の境界線"
+          implication: "形状が奥に存在している"
+          example: "破線の円 → 向こう側の穴や円柱"
+        
+        center_line_meaning:
+          definition: "対称軸や回転軸を示す"
+          implication: "円形や対称形状の存在を示唆"
+          note: "形状そのものではない"
+      
+      step3_element_classification:
+        geometric_classification:
+          rectangular_elements: "直方体、角柱、板状部品"
+          circular_elements: "円柱、円錐、球、穴"
+          complex_elements: "複数要素の組み合わせ"
+        
+        spatial_relationship:
+          stacked: "要素が上下に積み重なっている"
+          side_by_side: "要素が横に並んでいる"
+          embedded: "一方の要素が他方に埋め込まれている"
+          intersecting: "要素が互いに貫通している"
+
+    # 4.2 図面間対応関係の確認
+    cross_view_correspondence:
+      element_matching_process:
+        step1_element_inventory:
+          action: "各図面の要素リストを作成"
+          format: "図面名：要素1（形状・サイズ）、要素2（形状・サイズ）..."
+          example: 
+            front_view: "矩形（19×30）、円形（φ12）"
+            side_view: "矩形1（Z×5）、矩形2（φ12×4.5）"
+        
+        step2_correspondence_check:
+          method: "同一要素が他の図面でどう見えるかを確認"
+          verification_points:
+            size_consistency: "対応する寸法が一致するか"
+            position_consistency: "相対位置が整合するか"
+            projection_logic: "投影関係が論理的に正しいか"
+          
+          example_analysis:
+            front_circle_vs_side_rectangle:
+              question: "正面図の円形φ12 vs 右側面図の矩形φ12×4.5"
+              verification: "位置関係、サイズ、投影方向の整合性"
+              conclusion: "同一要素（円柱）の異なる投影"
+        
+        step3_shape_synthesis:
+          rule: "全図面で整合する3D形状を推定"
+          method: "各要素の3D形状を特定し、組み合わせ方を決定"
+          verification: "推定した3D形状が全図面と一致するか確認"
+
+    # 4.3 複合形状の系統的分析（新規追加）
+    composite_shape_analysis:
+      identification_triggers:
+        multiple_elements_per_view:
+          trigger: "1つの図面に複数の独立要素がある"
+          example: "正面図に矩形と円形が両方存在"
+          action: "複合形状の可能性を検討"
+        
+        dimensional_inconsistency:
+          trigger: "単一基本形状では説明できない寸法関係"
+          example: "高さが段階的に変化している"
+          action: "積層構造や段差構造を検討"
+        
+        feature_symbols:
+          trigger: "φ、R、面取りなどの記号が基本形状に追加"
+          example: "矩形にφ記号が併記"
+          action: "基本形状＋加工フィーチャーの組み合わせ"
+      
+      composite_types:
+        stacked_composition:
+          description: "複数の基本形状が積み重なった構造"
+          identification: "右側面図で高さ方向に複数の矩形"
+          example: "ベース直方体 + 上部円柱"
+          modeling_approach: "下から順番に要素を追加"
+        
+        side_by_side_composition:
+          description: "複数の基本形状が横に並んだ構造"
+          identification: "平面図で幅方向に複数の形状"
+          example: "L字型、T字型の構造"
+          modeling_approach: "基本形状の結合演算"
+        
+        embedded_composition:
+          description: "一方の形状に他方が埋め込まれた構造"
+          identification: "破線による内部形状の表現"
+          example: "穴あき部品、中空構造"
+          modeling_approach: "基本形状からの減算演算"
+      
+      analysis_procedure:
+        step1_primary_shape:
+          action: "最も大きな（基本となる）形状要素を特定"
+          criteria: "寸法が最大、全図面で確認できる"
+          example: "19×30×5の直方体部分"
+        
+        step2_secondary_shapes:
+          action: "追加される形状要素を特定"
+          criteria: "基本形状に付加される要素"
+          example: "φ12×4.5の円柱部分"
+        
+        step3_spatial_relationship:
+          action: "要素間の3D配置関係を特定"
+          method: "各図面での位置関係から推定"
+          verification: "全図面で位置関係が整合するか確認"
+
+    # 4.4 形状確定の検証システム（新規追加）
+    shape_verification_system:
+      before_shape_conclusion:
+        element_completeness_check:
+          - "[ ] 全図面の全要素を特定した"
+          - "[ ] 各要素の3D形状を決定した"
+          - "[ ] 要素間の配置関係を明確化した"
+        
+        consistency_verification:
+          - "[ ] 推定形状が正面図と一致する"
+          - "[ ] 推定形状が右側面図と一致する"
+          - "[ ] 推定形状が上面図と一致する"
+          - "[ ] 寸法の整合性を確認した"
+        
+        logic_check:
+          - "[ ] 投影関係が論理的に正しい"
+          - "[ ] 製造可能な形状である"
+          - "[ ] 機能的に合理的である"
+      
+      common_error_prevention:
+        oversimplification:
+          error: "複合形状を単一形状と誤認"
+          prevention: "必ず各図面の要素数を確認"
+          example: "矩形＋円形を単なる直方体と誤認しない"
+        
+        line_type_misinterpretation:
+          error: "実線と破線の意味を混同"
+          prevention: "線種の意味を必ず確認"
+          example: "実線の円は円柱、破線の円は穴"
+        
+        projection_confusion:
+          error: "図面間の対応関係を間違える"
+          prevention: "寸法と位置の整合性を必ず確認"
+          example: "正面図の円と側面図の矩形の対応確認"
+      
+      error_recovery_procedure:
+        detection_triggers:
+          - "推定形状と図面が一致しない"
+          - "寸法に矛盾がある"
+          - "製造不可能な形状になっている"
+        
+        recovery_steps:
+          step1: "要素分解からやり直し"
+          step2: "各図面を独立して再分析"
+          step3: "対応関係を慎重に再確認"
+          step4: "別の形状仮説を検討"
+
+    # 4.5 必須確認項目の追加
+    mandatory_checkpoints:
+      before_starting:
+        - "[ ] 各図面で要素数を数えた"
+        - "[ ] 実線・破線・中心線を区別した"
+        - "[ ] φ記号やその他の形状記号を確認した"
+      
+      during_analysis:
+        - "[ ] 複数要素がある場合は複合形状を検討している"
+        - "[ ] 各要素の対応関係を確認している"
+        - "[ ] 推測ではなく論理的根拠で判断している"
+      
+      before_conclusion:
+        - "[ ] 推定形状が全図面と一致することを確認した"
+        - "[ ] 寸法の整合性を確認した"
+        - "[ ] 製造可能性を確認した"
+      
+      error_prevention_rules:
+        single_shape_assumption:
+          prohibition: "図面を見て即座に「直方体」などと決めつけることを禁止"
+          requirement: "必ず要素分解から開始する"
+        
+        line_type_neglect:
+          prohibition: "実線・破線の区別を無視することを禁止"
+          requirement: "線種の意味を必ず確認する"
+        
+        projection_skip:
+          prohibition: "図面間の対応確認を省略することを禁止"
+          requirement: "全図面での整合性を必ず確認する"
+
+    # 既存の基本形状定義を修正・拡張
     basic_shapes:
+      # 単一基本形状
       rectangular_prism:
-        all_views: "矩形"
         description: "直方体"
+        appearance:
+          front_view: "矩形"
+          side_view: "矩形"
+          top_view: "矩形"
+        identification: "全図面で矩形が一致し、寸法が整合する"
       
       cylinder:
-        one_direction: "円"
-        other_directions: "矩形"
         description: "円柱"
+        appearance:
+          axis_parallel_view: "矩形"
+          axis_perpendicular_view: "円"
+        identification: "一方向から見ると円、他方向からは矩形で寸法が整合"
       
       cone:
-        one_direction: "円"
-        other_directions: "三角形"
         description: "円錐"
+        appearance:
+          axis_parallel_view: "三角形"
+          base_view: "円"
+        identification: "底面が円、側面が三角形で先端が尖っている"
       
       sphere:
-        all_directions: "円"
         description: "球"
+        appearance:
+          all_views: "円"
+        identification: "全方向から見て円で、全ての円のサイズが同じ"
+      
+      # 複合基本形状の例
+      l_shape:
+        description: "L字型"
+        appearance:
+          typical: "二つの矩形が直角に配置"
+        identification: "少なくとも一つの図面でL字形状が確認できる"
+        composition: "二つの直方体の組み合わせ"
+      
+      t_shape:
+        description: "T字型"
+        appearance:
+          typical: "垂直方向に伸びる矩形に水平方向の矩形が上部で交差"
+        identification: "少なくとも一つの図面でT字形状が確認できる"
+        composition: "二つの直方体の組み合わせ"
+      
+      stepped_shape:
+        description: "段差形状"
+        appearance:
+          typical: "異なる高さの矩形が積み重なっている"
+        identification: "側面図で段差が見られる"
+        composition: "複数の直方体の積層"
     
+    # 加工フィーチャーの定義も維持
     machining_features:
       through_hole:
         appearance: "複数図面で一貫した円形状"
@@ -613,6 +984,72 @@ modeling_guidelines:
 
   # 5. モデリング手順
   modeling_workflow:
+    # 5.1 新しい形状特定ワークフロー（完全改訂）
+    shape_identification_workflow:
+      # フェーズ1：要素の系統的抽出
+      phase1_systematic_extraction:
+        front_view_analysis:
+          step1: "実線で囲まれた領域をすべて特定"
+          step2: "各領域の形状（矩形/円形/その他）を分類"
+          step3: "各領域のサイズを確認"
+          step4: "重なりや包含関係を記録"
+          
+          example_output:
+            - "要素1：矩形（19×30）"
+            - "要素2：円形（φ12）、要素1の上に配置"
+        
+        side_view_analysis:
+          step1: "同様の要素抽出を実施"
+          step2: "φ記号による円形要素の確認"
+          step3: "積層関係や並列関係を記録"
+          
+          example_output:
+            - "要素1：矩形（Z×5）、下部"
+            - "要素2：矩形（φ12×4.5）、上部、円形マーク付き"
+        
+        top_view_analysis:
+          step1: "同様の分析を実施"
+          step2: "見えない要素がある場合は記録"
+          
+          note: "上面図で要素が見えない場合もある"
+
+      # フェーズ2：対応関係の論理的確認
+      phase2_correspondence_verification:
+        matching_algorithm:
+          step1_size_matching:
+            rule: "同じサイズの要素は同一要素の可能性が高い"
+            example: "正面図φ12 ↔ 側面図φ12×4.5"
+          
+          step2_position_matching:
+            rule: "相対位置が整合する要素は同一要素"
+            verification: "投影線による位置確認"
+          
+          step3_projection_logic:
+            rule: "投影方向で形状が変わる論理性確認"
+            example: "円柱：正面から見ると円、側面から見ると矩形"
+        
+        correspondence_table_creation:
+          format: "要素ID | 正面図 | 側面図 | 上面図 | 3D形状推定"
+          example:
+            - "要素A | 矩形19×30 | 矩形Z×5 | 矩形19×Z | 直方体19×30×5"
+            - "要素B | 円形φ12 | 矩形φ12×4.5 | 円形φ12 | 円柱φ12×4.5"
+
+      # フェーズ3：3D形状の確定
+      phase3_3d_shape_determination:
+        individual_element_shapes:
+          method: "各要素の3D形状を個別に確定"
+          verification: "全図面での見え方と一致するか確認"
+        
+        spatial_relationship:
+          method: "要素間の3D配置関係を確定"
+          types: ["積層", "並列", "埋込", "貫通"]
+          verification: "図面の位置関係と一致するか確認"
+        
+        composite_shape_assembly:
+          method: "個別要素を組み合わせて最終形状を決定"
+          verification: "組み合わせ結果が全図面と一致するか確認"
+
+    # 5.2 基本手順（既存）
     basic_procedure:
       1: "図面の投影法確認"
       2: "基準図面の選定（通常は正面図）"
@@ -621,7 +1058,7 @@ modeling_guidelines:
       5: "加工フィーチャーの追加"
       6: "寸法・形状の検証"
     
-    # 改良版モデリングワークフロー（追加）
+    # 5.3 改良版モデリングワークフロー（既存）
     improved_workflow:
       phase1_preparation:
         1: "図面の投影法確認（第三角法/第一角法）"
@@ -652,6 +1089,44 @@ modeling_guidelines:
         3: "全図面との整合性を確認"
         4: "製造可能性の確認"
     
+    # 5.4 複合形状向け改良モデリングワークフロー（新規追加）
+    composite_shape_workflow:
+      phase1_element_decomposition:
+        1: "各図面の独立要素を特定（実線領域のカウント）"
+        2: "線種（実線/破線/中心線）の意味を分析"
+        3: "各要素の形状分類（矩形/円形/複合など）"
+        4: "各要素の寸法特定"
+      
+      phase2_element_correspondence:
+        1: "図面間での要素対応関係を特定"
+        2: "サイズの一致による対応付け"
+        3: "位置関係の論理的整合性確認"
+        4: "対応表の作成（各要素の各図面での見え方）"
+      
+      phase3_base_shape_creation:
+        1: "最大/最も基本的な要素の3D形状確定"
+        2: "基本形状のモデリング"
+        3: "基準座標系の設定"
+        4: "基本寸法の適用"
+      
+      phase4_secondary_shapes_addition:
+        1: "二次的要素の形状確定（円柱/突起/凹みなど）"
+        2: "二次要素の位置関係決定"
+        3: "結合方法の決定（追加/減算/交差）"
+        4: "二次要素のモデリングと結合"
+      
+      phase5_feature_addition:
+        1: "加工フィーチャーの特定（穴/面取り/丸みなど）"
+        2: "フィーチャーの寸法と位置の確認"
+        3: "フィーチャーの追加"
+        4: "最終形状の確認"
+      
+      phase6_comprehensive_verification:
+        1: "全要素が正確にモデル化されているか確認"
+        2: "要素間の関係が図面と一致するか確認"
+        3: "全体形状が全図面と整合するか確認"
+        4: "寸法と公差の最終チェック"
+    
     base_shape_creation:
       method: "最大外形寸法で直方体を作成"
       dimension_source: "各軸方向の寸法を各図面から取得"
@@ -663,7 +1138,31 @@ modeling_guidelines:
       2: "加算フィーチャー（突起、フランジ）"
       3: "仕上げフィーチャー（面取り、丸み）"
       
-    # エラー防止のためのクロスチェックポイント（追加）
+    # 5.5 要素分解先行アプローチ（新規追加）
+    element_first_approach:
+      principle: "形状判断より要素分解を優先する"
+      rationale: "要素数と関係性を先に特定することで誤認を防止"
+      key_steps:
+        1: "要素数の特定（各図面の独立した形状領域をカウント）"
+        2: "線種の意味分析（実線/破線/中心線）"
+        3: "要素対応の確認（各図面での同一要素の見え方）"
+        4: "形状仮説の構築（対応関係から3D形状を推定）"
+        5: "仮説検証（推定形状が全図面と整合するか確認）"
+      
+      benefits:
+        - "単一形状と複合形状の区別が明確"
+        - "図面間の不整合を早期発見可能"
+        - "形状バイアスの影響を最小化"
+        - "複雑な形状も系統的に分析可能"
+      
+      implementation:
+        step1: "各図面を独立して分析（他図面の影響を排除）"
+        step2: "各図面の要素リスト作成"
+        step3: "要素間の対応関係を分析"
+        step4: "最も論理的な3D形状仮説を構築"
+        step5: "仮説を全図面で検証"
+    
+    # エラー防止のためのクロスチェックポイント（既存）
     critical_check_points:
       after_shape_recognition:
         - "[ ] 判断した基本形状が全ての図面と一致するか"
@@ -684,6 +1183,22 @@ modeling_guidelines:
         - "[ ] 各フィーチャーの位置が正確か"
         - "[ ] フィーチャーの種類（穴/切欠きなど）が正しいか"
         - "[ ] 全てのフィーチャーが追加されているか"
+      
+      # 複合形状のクロスチェックポイント（新規追加）
+      after_element_decomposition:
+        - "[ ] 全ての図面で要素数を正確にカウントしたか"
+        - "[ ] 実線と破線を正しく区別しているか"
+        - "[ ] 各要素の形状特徴を明確に記録したか"
+      
+      after_correspondence_analysis:
+        - "[ ] 各要素の図面間対応関係が論理的に整合するか"
+        - "[ ] 対応が不明な要素はないか"
+        - "[ ] 投影方向による形状変化が論理的に説明可能か"
+      
+      after_composite_assembly:
+        - "[ ] 全ての要素が適切に組み合わされているか"
+        - "[ ] 要素間の位置関係が図面と一致するか"
+        - "[ ] 最終形状が全図面と整合するか"
 
   # 6. 日本での穴加工表記
   hole_notations_japan:
@@ -896,3 +1411,109 @@ modeling_guidelines:
     casting_parts:
       counterbore_indication: "ざぐりを指示する面に除去加工なしの表面粗さ記号がセット"
       depth_standard: "深さ指示が不要でもJISでの例が1mmなので1mmで指示"
+
+  # 11. エラー対処システム（追加）
+  error_handling_system:
+    error_detection_triggers:
+      dimensional_inconsistency:
+        trigger: "同一軸で異なる寸法値を読み取った場合"
+        action: "全ての寸法読み取りを最初からやり直し"
+      
+      axis_assignment_confusion:
+        trigger: "軸方向の割り当てに確信が持てない場合"
+        action: "投影関係の再確認から開始"
+      
+      missing_dimensions:
+        trigger: "X,Y,Z軸のいずれかの寸法が特定できない場合"
+        action: "見落とし防止の再スキャン実施"
+    
+    root_cause_analysis:
+      observation_error:
+        causes: ["系統的スキャンの不実施", "確認作業の省略", "推測の混入"]
+        prevention: "観察チェックリストの強制実行"
+      
+      understanding_error:
+        causes: ["軸対応関係の誤解", "投影法の理解不足", "寸法分類の混同"]
+        prevention: "基礎知識の再確認と理解度テスト"
+      
+      cognitive_bias:
+        causes: ["確認バイアス", "複雑性回避", "パターン認識の早急化"]
+        prevention: "意識的なバイアス排除と複数視点での確認"
+    
+    recovery_procedure:
+      immediate_action:
+        step1: "現在の作業を完全停止"
+        step2: "エラーの種類と原因を特定"
+        step3: "該当する改善手順を実行"
+        step4: "最初から観察プロセスを再開"
+      
+      quality_assurance:
+        rule: "エラー発生後は必ず2人以上での確認を実施"
+        method: "独立した確認者による寸法読み取りの検証"
+
+  # 12. スキル向上のための訓練システム（追加）
+  skill_development_system:
+    basic_observation_training:
+      exercise_1:
+        name: "数値位置特定訓練"
+        method: "図面上の全数値を位置付きでリスト化"
+        success_criteria: "見落とし率0%"
+      
+      exercise_2:
+        name: "軸対応関係訓練"
+        method: "各図面の軸方向を矢印で明示"
+        success_criteria: "正確性100%"
+      
+      exercise_3:
+        name: "寸法分類訓練"
+        method: "全寸法を種類別に分類"
+        success_criteria: "分類精度95%以上"
+    
+    progressive_difficulty:
+      level_1: "単純な直方体（寸法3個）"
+      level_2: "穴付き部品（寸法5-7個）"
+      level_3: "複合形状部品（寸法10個以上）"
+      
+      advancement_criteria: "各レベルで連続5回成功"
+    
+    self_assessment_tools:
+      checklist_compliance_rate:
+        measurement: "観察チェックリストの実行率"
+        target: "100%実行"
+      
+      error_rate_tracking:
+        measurement: "寸法読み取りエラーの発生率"
+        target: "月間エラー率5%以下"
+      
+      time_efficiency:
+        measurement: "正確な寸法読み取りに要する時間"
+        target: "品質を保ちながら効率化"
+
+  # 13. 必須実行項目（追加）
+  mandatory_requirements:
+    before_any_analysis:
+      - "ガイドラインの該当セクションを読み直す"
+      - "観察チェックリストを手元に準備する"
+      - "エラー対処手順を確認する"
+    
+    during_analysis:
+      - "各ステップ完了時にチェックリストに記録"
+      - "不明点は推測せず「不明」として記録"
+      - "矛盾発見時は即座に作業を停止"
+    
+    after_analysis:
+      - "全結果をダブルチェック"
+      - "ガイドライン遵守度を自己評価"
+      - "エラーがあった場合は原因分析を実施"
+
+    compliance_verification:
+      self_check_questions:
+        - "観察チェックリストを100%実行したか？"
+        - "軸対応関係を正確に把握したか？"
+        - "全寸法を2回以上確認したか？"
+        - "推測や思い込みが混入していないか？"
+    
+      failure_consequences:
+        - "チェック項目に1つでも未実行があれば最初からやり直し"
+        - "エラー発生時は原因分析レポートを作成"
+        - "継続的なエラーがある場合は基礎訓練に戻る"
