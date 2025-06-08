@@ -349,16 +349,23 @@ modeling_guidelines:
 
     # 3.3 観察プロセスの厳格化
     observation_process_critical:
-      step1_systematic_scanning:
-        method: "図面を左上から右下へ系統的にスキャン"
-        action: "数値を発見した瞬間にその位置を正確に記録"
-        format: "数値○○ → △△図面の□□位置"
-        prohibition: "記憶や推測に頼った位置特定の禁止"
+      step1_complete_element_inventory:
+        method: "図面の全要素を種類別に完全列挙"
+        procedure:
+          - "実線で囲まれた独立領域を全て特定・カウント"
+          - "破線要素を全て特定・分類"
+          - "記号（φ、C、R等）を全て抽出・位置記録"
+          - "寸法線と数値を全て抽出・位置記録"
+        verification: "要素数の再カウントによる確認"
+        critical_rule: "推測を一切排除し、観察事実のみを記録"
       
-      step2_position_verification:
-        method: "発見した各数値について位置を再確認"
-        requirement: "数値と図面の対応を2回以上確認"
-        documentation: "位置記録の証拠保全"
+      step2_element_relationship_analysis:
+        method: "要素間の関係性を系統的に分析"
+        procedure:
+          - "実線矩形の個数と配置関係の確認"
+          - "φ記号と対応する形状要素の特定"
+          - "寸法線の起点・終点と対象要素の確認"
+        format: "要素種類_個数_位置_対応関係"
       
       step3_cross_check:
         method: "記録した位置情報の総合確認"
@@ -522,10 +529,22 @@ modeling_guidelines:
     # 3.9 寸法分類の明確化
     dimension_classification:
       overall_dimensions:
-        definition: "部品の最大外形寸法"
-        identification: "通常は各図面の最大寸法線"
+        definition: "最外側外形実線部を示す寸法が全体寸法"
+        identification_method:
+          step1: "各図面で外形を示す実線を特定"
+          step2: "その実線の両端を結ぶ寸法線を特定"
+          step3: "複数候補がある場合は最大値を選択"
+          step4: "他図面での同一軸寸法との整合性確認"
         priority: "最優先で確定すべき寸法"
         verification: "複数図面で同一軸の寸法が一致"
+        
+      multiple_dimensions_handling:
+        rule: "同一方向に複数寸法がある場合の優先順位"
+        priority_order:
+          1: "最外側実線間の寸法"
+          2: "公差表記のある寸法（重要寸法の指標）"
+          3: "部分寸法より全体を示唆する寸法"
+        tolerance_recognition: "公差表記（例：5mm公差-0.1～0）は重要寸法の指標"
       
       feature_position_dimensions:
         definition: "加工フィーチャーの位置を示す寸法"
@@ -661,12 +680,25 @@ modeling_guidelines:
       
       rule: "優先順位の高い項目から順番に処理し、混同を防ぐ"
     
-    # 3.14 強制的観察チェックリスト（追加）
-    mandatory_observation_checklist:
+    # 3.14 強化版観察チェックリスト（改良）
+    enhanced_observation_checklist:
       before_analysis_start:
-        - "[ ] 図面の全体を一度俯瞰した"
-        - "[ ] 投影記号を確認した"
-        - "[ ] 各図面の配置関係を把握した"
+        basic_observation:
+          - "[ ] 各図面の実線要素数をカウントした"
+          - "[ ] 各図面の破線要素を特定した"
+          - "[ ] 全ての記号（φ、C、R、M等）を位置付きで記録した"
+          - "[ ] 投影記号を確認した"
+        
+        element_inventory:
+          - "[ ] 正面図: 実線領域_個、破線領域_個、記号_個"
+          - "[ ] 右側面図: 実線領域_個、破線領域_個、記号_個"
+          - "[ ] 上面図: 実線領域_個、破線領域_個、記号_個"
+        
+        preliminary_analysis:
+          - "[ ] 複数要素がある図面を特定した"
+          - "[ ] φ記号と対応要素を仮特定した"
+          - "[ ] C記号と面取り対象角部を特定した"
+          - "[ ] 明らかな対応関係を記録した"
       
       during_dimension_reading:
         step1_systematic_scan:
@@ -755,6 +787,27 @@ modeling_guidelines:
 
     # 4.2 図面間対応関係の確認
     cross_view_correspondence:
+      # 必須要素カウント
+      mandatory_element_counting:
+        rule: "各図面の独立要素数を必ずカウント"
+        procedure:
+          front_view: "実線で囲まれた領域数をカウント"
+          side_view: "積層する矩形の個数をカウント"
+          top_view: "平面形状要素の個数をカウント"
+        verification: "要素数の整合性確認"
+        example: "右側面図で矩形2個 → 基部1個+突起1個"
+      
+      # 記号対応関係の検証
+      symbol_correspondence_verification:
+        φ_symbol_analysis:
+          rule: "φ記号がある矩形は円柱要素"
+          verification: "他図面で円形要素として表現されるか確認"
+          example: "右側面図φ12矩形 → 正面図または上面図で円形確認"
+        c_symbol_analysis:
+          rule: "C記号は面取り加工指示"
+          verification: "角部に適用される表面加工"
+          example: "4-C0.5 → 4つの角部に0.5mm面取り"
+      
       element_matching_process:
         step1_element_inventory:
           action: "各図面の要素リストを作成"
@@ -780,6 +833,14 @@ modeling_guidelines:
           rule: "全図面で整合する3D形状を推定"
           method: "各要素の3D形状を特定し、組み合わせ方を決定"
           verification: "推定した3D形状が全図面と一致するか確認"
+      
+      # 投影論理の検証
+      projection_logic_verification:
+        consistency_check:
+          - "突起と判断した要素が全図面で論理的に整合するか"
+          - "穴と判断した要素が適切に破線表現されているか"
+          - "同一要素の寸法が図面間で一致するか"
+          - "面取りが適切な位置（角部）に指示されているか"
 
     # 4.3 複合形状の系統的分析（新規追加）
     composite_shape_analysis:
@@ -887,16 +948,19 @@ modeling_guidelines:
         - "[ ] 各図面で要素数を数えた"
         - "[ ] 実線・破線・中心線を区別した"
         - "[ ] φ記号やその他の形状記号を確認した"
+        - "[ ] C記号（面取り）とL記号（長さ）を区別した"
       
       during_analysis:
         - "[ ] 複数要素がある場合は複合形状を検討している"
         - "[ ] 各要素の対応関係を確認している"
         - "[ ] 推測ではなく論理的根拠で判断している"
+        - "[ ] 記号の意味を文脈で検証している"
       
       before_conclusion:
         - "[ ] 推定形状が全図面と一致することを確認した"
         - "[ ] 寸法の整合性を確認した"
         - "[ ] 製造可能性を確認した"
+        - "[ ] 面取り加工が角部に正しく配置されている"
       
       error_prevention_rules:
         single_shape_assumption:
@@ -910,6 +974,11 @@ modeling_guidelines:
         projection_skip:
           prohibition: "図面間の対応確認を省略することを禁止"
           requirement: "全図面での整合性を必ず確認する"
+        
+        symbol_misreading:
+          prohibition: "記号の意味を推測で判断することを禁止"
+          requirement: "記号の標準的意味を必ず確認する"
+          examples: "C≠L、φ≠穴の深さ、4-C0.5≠4mm-C0.5"
 
     # 既存の基本形状定義を修正・拡張
     basic_shapes:
@@ -1200,24 +1269,77 @@ modeling_guidelines:
         - "[ ] 要素間の位置関係が図面と一致するか"
         - "[ ] 最終形状が全図面と整合するか"
 
-  # 6. 日本での穴加工表記
-  hole_notations_japan:
-    symbols:
-      diameter: 
-        symbol: "φ"
-        reading: ["まる", "ふぁい"]
-      
-      hole_depth:
-        symbol: "↧"
-        reading: "あなふかさ"
-      
-      counterbore:
-        symbol: "⌴"
-        reading: ["ざぐり", "ふかざぐり"]
-      
-      countersink:
-        symbol: "⌵"
-        reading: "さらざぐり"
+  # 6. 日本での図面表記
+  japanese_drawing_notations:
+    # 6.1 穴加工表記
+    hole_notations:
+      symbols:
+        diameter: 
+          symbol: "φ"
+          reading: ["まる", "ふぁい"]
+        
+        hole_depth:
+          symbol: "↧"
+          reading: "あなふかさ"
+        
+        counterbore:
+          symbol: "⌴"
+          reading: ["ざぐり", "ふかざぐり"]
+        
+        countersink:
+          symbol: "⌵"
+          reading: "さらざぐり"
+    
+    # 6.2 面取り加工表記（新規追加）
+    chamfer_notations:
+      symbol: "C"
+      definition: "面取り加工（角部を斜めに削る加工）"
+      standard_notation: "C0.5, C1×45°"
+      multiple_notation: "4-C0.5（4箇所にC0.5面取り加工）"
+      application: "角部の面取り、バリ取り、安全性向上"
+      common_mistakes:
+        - "C0.5をL=0.5（長さ）と誤読"
+        - "4-C0.5を4mm-C0.5と誤読"
+        - "面取り加工を穴加工と混同"
+      clarification: "面取りは穴加工ではなく、角部の表面加工"
+    
+    # 6.3 加工種類の区別
+    processing_type_distinction:
+      surface_processing:
+        - "面取り（C記号）: 角部の表面加工"
+        - "丸み（R記号）: 角部の表面加工"
+        - "表面粗さ: 表面仕上げ加工"
+      hole_processing:
+        - "ドリル穴（φ記号）: 貫通または止まり穴"
+        - "タップ穴（M記号）: ねじ穴加工"
+        - "リーマ穴（H7等）: 精密穴加工"
+      critical_distinction: "表面加工と穴加工を明確に区別する"
+    
+    # 6.4 数量表記の読み方
+    quantity_notations:
+      pattern: "数字-記号"
+      examples:
+        - "4-C0.5: 4箇所にC0.5面取り加工"
+        - "3-M3THRU: 3箇所にM3貫通ねじ穴"
+        - "2-φ3H7THRU: 2箇所にφ3H7貫通穴"
+      reading_rule: "数字は箇所数、記号は加工種類"
+    
+    # 6.5 記号誤読防止システム
+    symbol_misreading_prevention:
+      mandatory_verification:
+        step1: "記号を文字として認識（C、L、φ等）"
+        step2: "記号の標準的意味を確認"
+        step3: "文脈での妥当性を検証"
+      symbol_meanings:
+        C: "面取り加工（表面加工）"
+        L: "長さ寸法"
+        φ: "円・穴径"
+        M: "ねじ穴"
+        R: "丸み・半径"
+      verification_questions:
+        - "この記号は加工指示か寸法指示か？"
+        - "表面加工か穴加工か？"
+        - "数量表記（4-C0.5）か単位表記（L=0.5）か？"
     
     hole_types:
       drill_hole:
@@ -1493,27 +1615,33 @@ modeling_guidelines:
   mandatory_requirements:
     before_any_analysis:
       - "ガイドラインの該当セクションを読み直す"
-      - "観察チェックリストを手元に準備する"
+      - "強化版観察チェックリストを手元に準備する"
+      - "記号誤読防止システムを確認する"
       - "エラー対処手順を確認する"
     
     during_analysis:
       - "各ステップ完了時にチェックリストに記録"
       - "不明点は推測せず「不明」として記録"
       - "矛盾発見時は即座に作業を停止"
+      - "記号発見時は必ず意味を確認"
     
     after_analysis:
       - "全結果をダブルチェック"
       - "ガイドライン遵守度を自己評価"
       - "エラーがあった場合は原因分析を実施"
+      - "記号の解釈が正しかったか再確認"
 
     compliance_verification:
       self_check_questions:
-        - "観察チェックリストを100%実行したか？"
+        - "強化版観察チェックリストを100%実行したか？"
         - "軸対応関係を正確に把握したか？"
         - "全寸法を2回以上確認したか？"
         - "推測や思い込みが混入していないか？"
+        - "記号の意味を正しく理解したか？"
+        - "要素数のカウントを正確に行ったか？"
     
       failure_consequences:
         - "チェック項目に1つでも未実行があれば最初からやり直し"
         - "エラー発生時は原因分析レポートを作成"
         - "継続的なエラーがある場合は基礎訓練に戻る"
+        - "記号誤読が発生した場合は記号知識の再学習を実施"
