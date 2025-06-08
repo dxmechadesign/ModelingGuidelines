@@ -673,12 +673,13 @@ modeling_guidelines:
           warning: "基準面が不明な場合は位置寸法として扱わない"
 
     dimension_reading_priority:
-      priority_1: "全体寸法の特定（最優先）"
-      priority_2: "軸方向の確認"
-      priority_3: "位置寸法の特定"
-      priority_4: "フィーチャー寸法の特定"
+      priority_1: "記号の確認（φ、C、R等）"
+      priority_2: "全体寸法の特定"
+      priority_3: "軸方向の確認"
+      priority_4: "位置寸法の特定"
+      priority_5: "フィーチャー寸法の特定"
       
-      rule: "優先順位の高い項目から順番に処理し、混同を防ぐ"
+      rule: "記号→数値の順序で読み取り、優先順位に従って処理"
     
     # 3.14 強化版観察チェックリスト（改良）
     enhanced_observation_checklist:
@@ -735,6 +736,41 @@ modeling_guidelines:
           - "同一軸の寸法が複数図面で一致するか"
           - "全体寸法と部分寸法の関係に矛盾がないか"
           - "フィーチャー位置が全体寸法内に収まるか"
+      
+      # 3.15 相対検証システム（新規追加）
+      relative_verification_system:
+        principle: "寸法補助線の間隔は寸法値に比例する"
+        purpose: "数値誤読防止の最終チェック手段"
+        
+        verification_procedure:
+          step1_reference_establishment:
+            action: "最も確実に読み取れる寸法を基準値として設定"
+            examples: ["明確な小寸法（7mm、5mm）", "φ記号付き寸法", "重複記載寸法"]
+          
+          step2_proportional_check:
+            action: "疑問寸法の補助線間隔を基準と比較"
+            method: "間隔比較による相対計算"
+            example: "間隔が1.7倍 × 7mm = 12mm程度"
+          
+          step3_plausibility_verification:
+            action: "計算結果と読み取り値の妥当性判断"
+            criteria: ["工学的妥当性", "他寸法との整合性", "記号との整合性"]
+        
+        mandatory_triggers:
+          - "50mm以上の大寸法を読み取った場合"
+          - "縦横比が10:1を超える場合"
+          - "φ記号付きで50mm超の値の場合"
+        
+        common_error_prevention:
+          phi_symbol_misreading:
+            error: "φ12を412と誤読"
+            cause: "φ記号見落とし＋数値誤認"
+            prevention: "φ記号優先確認＋相対検証"
+          
+          scale_misjudgment:
+            error: "実際の10倍の寸法で読み取り"
+            cause: "補助線間隔の誤判断"
+            prevention: "基準寸法との比例確認"
 
   # 4. フィーチャー識別
   feature_identification:
@@ -935,12 +971,14 @@ modeling_guidelines:
           - "推定形状と図面が一致しない"
           - "寸法に矛盾がある"
           - "製造不可能な形状になっている"
+          - "相対検証で大きな差異がある"
         
         recovery_steps:
           step1: "要素分解からやり直し"
           step2: "各図面を独立して再分析"
           step3: "対応関係を慎重に再確認"
           step4: "別の形状仮説を検討"
+          step5: "相対検証による寸法再確認"
 
     # 4.5 必須確認項目の追加
     mandatory_checkpoints:
@@ -979,6 +1017,42 @@ modeling_guidelines:
           prohibition: "記号の意味を推測で判断することを禁止"
           requirement: "記号の標準的意味を必ず確認する"
           examples: "C≠L、φ≠穴の深さ、4-C0.5≠4mm-C0.5"
+    
+    # 4.6 記号統合判定システム（新規追加）
+    symbol_integrated_judgment:
+      symbol_first_reading:
+        principle: "数値読み取り前に必ず記号を確認"
+        procedure:
+          step1: "記号（φ、C、R等）の存在を先に確認"
+          step2: "記号の意味を確認（円・穴・面取り等）"
+          step3: "記号に基づいて数値の妥当性を判断"
+          step4: "数値を読み取り"
+        
+        benefit: "記号が数値の妥当性判断の手がかりとなる"
+      
+      phi_symbol_reading:
+        detection_priority: "数値読み取りより記号検出を優先"
+        plausibility_check:
+          small_holes: "φ3～φ20程度が一般的"
+          large_holes: "φ50超は特殊用途でない限り稀"
+          warning: "φ100超の読み取りは必ず再確認"
+        
+        context_verification:
+          rule: "φ寸法は他図面で円形要素として確認可能"
+          method: "正面図または上面図で対応する円形を確認"
+          cross_check: "円形要素のサイズとφ値の一致確認"
+      
+      character_recognition_enhancement:
+        visual_comparison:
+          rule: "同じ数字が他箇所にあれば文字形状を比較"
+          method: "フォント特徴による文字識別の確認"
+          example: "1と4、2と7、6と9の判別"
+        
+        context_verification:
+          checks:
+            - "φ記号があるのに100mm超の値は疑問"
+            - "面取りC記号で10mm超の値は疑問"
+            - "位置寸法が全体寸法を超えることはない"
 
     # 既存の基本形状定義を修正・拡張
     basic_shapes:
@@ -1568,10 +1642,59 @@ modeling_guidelines:
         step2: "エラーの種類と原因を特定"
         step3: "該当する改善手順を実行"
         step4: "最初から観察プロセスを再開"
+        step5: "相対検証システムを必ず適用"
       
       quality_assurance:
         rule: "エラー発生後は必ず2人以上での確認を実施"
         method: "独立した確認者による寸法読み取りの検証"
+    
+    # 11.4 寸法読み取り品質保証システム（新規追加）
+    dimension_reading_quality_assurance:
+      relative_verification_mandate:
+        trigger_conditions:
+          - "初回読み取り完了時"
+          - "大寸法（50mm超）検出時"
+          - "アスペクト比異常時（10:1超）"
+          - "記号付き寸法読み取り時"
+        
+        verification_procedure:
+          step1: "基準寸法（7mm等の確実な値）を選定"
+          step2: "疑問寸法の補助線間隔を基準と比較"
+          step3: "比例計算による妥当性確認"
+          step4: "工学的常識による最終判定"
+        
+        acceptance_criteria:
+          - "相対計算値と読み取り値の差が20%以内"
+          - "工学的に妥当な寸法範囲内"
+          - "他図面での形状要素と整合"
+      
+      error_learning_system:
+        common_error_database:
+          phi_misreading:
+            description: "φ12をφ412と誤読"
+            cause: "記号見落とし＋数値誤認"
+            prevention: "φ記号優先確認＋相対検証"
+          
+          scale_misinterpretation:
+            description: "実際の10倍の寸法で読み取り"
+            cause: "補助線間隔の誤判断"
+            prevention: "基準寸法との比例確認"
+        
+        prevention_checklist:
+          before_reading:
+            - "[ ] 記号（φ、C、R等）の存在確認"
+            - "[ ] 基準寸法の選定完了"
+            - "[ ] 相対検証の準備完了"
+          
+          during_reading:
+            - "[ ] 記号→数値の順序で読み取り"
+            - "[ ] 大寸法は即座に相対検証"
+            - "[ ] 工学的妥当性の常時確認"
+          
+          after_reading:
+            - "[ ] 全寸法の相対検証完了"
+            - "[ ] アスペクト比の妥当性確認"
+            - "[ ] 記号と数値の整合性確認"
 
   # 12. スキル向上のための訓練システム（追加）
   skill_development_system:
@@ -1639,6 +1762,7 @@ modeling_guidelines:
         - "推測や思い込みが混入していないか？"
         - "記号の意味を正しく理解したか？"
         - "要素数のカウントを正確に行ったか？"
+        - "相対検証システムを適用したか？"
     
       failure_consequences:
         - "チェック項目に1つでも未実行があれば最初からやり直し"
